@@ -34,7 +34,7 @@ body {
 }
 
 .menu_header{
-    width: 20%;
+    width: 15%;
     padding:5px 10px;
     text-align: center;
     font-weight: bold;
@@ -131,11 +131,20 @@ input.rec_day{
 
 .text_short{
     padding: 0px 5px 0px 5px;
-    width: 60px;
+    width: 100px;
     height: 25px;
     font-size: 15px;
     border:1px black solid;
     border-radius: 2px;
+}
+
+.error_report{
+    color:red;
+}
+
+::placeholder {
+    color: red;
+    opacity: 1; /* Firefox */
 }
 
 
