@@ -319,7 +319,7 @@ function submit() {
         $("#exp_error").html("");
     }
 //    var i =0;
-    $('form#user_save :input').each(
+    $('form#patient_save :input').each(
             function (i, el) {
                 var id_input = el.id;
 
@@ -361,7 +361,7 @@ function submit() {
             });
 
     var check = check_submit(check_news);
-    console.log(check);
+    //console.log(check);
     if (check === false) {
         alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     } else {
@@ -374,7 +374,7 @@ function submit() {
 function check_submit(check_news) {
 
     var suc = "1";
-    $('form#user_save :input').each(
+    $('form#patient_save :input').each(
             function (i, el) {
                 var id_input = el.id;
 
@@ -393,7 +393,7 @@ function check_submit(check_news) {
 
                 if (!el.value || el.value === '') {
                    suc = "0";
-                   console.log(el.id);
+                   //console.log(el.id);
                 } else {
                    //do nothing
                 }
@@ -418,5 +418,9 @@ function checkbox_check(){
    }else{
        return true;
    }
+}
+
+function search_submit(){
+    
 }
 

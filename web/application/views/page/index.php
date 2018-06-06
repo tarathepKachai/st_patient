@@ -35,7 +35,7 @@
                 <td style="padding: 10px;vertical-align: top" rowspan="4">
                     <!--Save Patient Data-->
                     <div style="display: block;"  id="choice1" class="scrollable">
-                        <form name="user_save" id="user_save" action="#" method="POST">
+                        <form name="patient_save" id="patient_save" action="#" method="POST">
                             <label class="label_1">วัน/เดือน/ปี </label> &nbsp; <input  type="text" name="rec_day" id="datepicker2" class="rec_day" > 
                             <span class="error_report" id="rec_day_error" ></span>
                             <br>
@@ -139,7 +139,7 @@
                             &nbsp; <label><input type="checkbox" class="radio_but" name="news_people" id="news_people" value="4"> คำแนะนำจากบุคคลอื่น</label>
                             &nbsp; <label><input type="checkbox" class="radio_but" name="news_other" id="news_other" value="5"> อื่นๆ</label> <input type="text" class="name_medium" name="other_detail" id="other_detail">
                             <br>
-                            <label class="label_1" >ถ้าท่านได้รับเลือกเป็นผู้ป่วยจำลองแล้ว ท่านจะสามารถมาทำงานได้</label>
+                            <label class="label_1" >ถ้าท่านได้รับเลือกเป็นผู้ป่วยจำลองแล้ว ท่านจะสามารถมาทำงานได้</label><span class="error_report" id="come_error" ></span>
                             <br>
                             <label><input type="radio" name="time_to_come" value="1"> ทุกครั้งเมื่อคณะแพทยศาสตร์ </label><br>
                             <label><input type="radio" name="time_to_come" value="2"> บางครั้งตามแต่เวลาและโอกาสจะเอื้ออำนวย </label><br>
@@ -154,53 +154,47 @@
                         <label class="label_1">ตัวเลือกการค้นหา</label>
                         <select name="search_option" id="search_option"   >
 
-                            <option value="1" >--อายุ,เพศ--</option>
-                            <option value="2" >--เพศ,น้ำหนัก--</option>
-                            <option value="3" >--เพศ,ประสบการณ์--</option>
+                            <option value="1" >--อายุ , เพศ--</option>
+                            <option value="2" >--เพศ , น้ำหนัก--</option>
+                            <option value="3" >--เพศ , ประสบการณ์--</option>
 
                         </select>
-                        <div id="search_1" >
-                            อายุ
+                        <div id="search_1" style="padding-left: 10px" >
+                            <label class="label_1">อายุ</label>
                             <input type="text" name="age1" id="age1" class="age_box">  ปี &nbsp; 
-                            เพศ 
-                            <select name="search_gender1" id="search_gender1">
-                                <option value="1">ชาย</option>
-                                <option value="2">หญิง</option>
-                            </select>  
+                            <label class="label_1"> เพศ </label>
+                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s1" value="1" > ชาย</label>
+                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s1" value="2"> หญิง</label>
                             <button class="search_btn" onclick="search_submit()" class="btn btn-default">ค้นหา</button>
                         </div>
 
-                        <div id="search_2" style="display:none">
-                            เพศ 
-                            <select name="search_gender2" id="search_gender2">
-                                <option value="1">ชาย</option>
-                                <option value="2">หญิง</option>
-                            </select>  
-                            &nbsp; น้ำหนัก
+                        <div id="search_2" style="display:none;padding-left: 10px">
+                            <label class="label_1">เพศ</label> 
+                            &nbsp; <label><input type="radio" class="radio_but" name="gender_s2" value="1" > ชาย</label>
+                            &nbsp; <label><input type="radio" class="radio_but" name="gender_s2" value="2"> หญิง</label>
+
+                            &nbsp; <label class="label_1">น้ำหนัก</label>
                             <input type="text" name="weight2" id="weight2" class="text_short">  ปี 
                             <button class="search_btn" onclick="search_submit()" class="btn btn-default">ค้นหา</button>
                         </div>
 
-                        <div id="search_3" style="display:none"> 
-                            เพศ
-                            <select name="search_gender3" id="search_gender3">
-                                <option value="1">ชาย</option>
-                                <option value="2">หญิง</option>
-                            </select>  
-                            ประสบการณ์
-                            <select name="search_exp3" id="search_exp3">
-                                <option value="1">เคย</option>
-                                <option value="2">ไม่เคย</option>
-                            </select>
-
-                            <span style="display:none"> <
-                                select name="search_exp3" id="search_exp3">
-                                <option value="1">เคย</option>
-                                <option value="2">ไม่เคย</option>
-                                </select>
-                            </span>
-
-                            <button class="search_btn" onclick="search_submit()" class="btn btn-default">ค้นหา</button>
+                        <div id="search_3" style="display:none;padding-left: 10px"> 
+                            <label class="label_1">เพศ</label> 
+                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s3" value="1">ชาย</label>
+                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s3" value="2">หญิง</label>
+                            &nbsp;<label class="label_1">ประสบการณ์</label> &nbsp;
+                            <label><input type="checkbox" class="radio_but" name="exp_s1" id="exp_s1" value="1"> ซักประวัติอาการ </label> 
+                            <input type="text" class="name_medium" style="width: 220px" name="exp_s1_d" id="exp_s1_d" > &nbsp;
+                            <label><input type="checkbox" class="radio_but" name="exp_s2"  id="exp_s2" value="1"> ให้คำแนะนำอาการ/โรค 
+                                <input type="text" class="name_medium" style="width: 220px" name="exp_s2_d" id="exp_s2_d" >
+                                <br>
+                                
+                                <label ><input type="checkbox" class="radio_but" name="exp_s3" id="exp_s3" value="1"></label>
+                                <input type="text" class="name_medium" style="width:220px" name="exp_s3_d" id="exp_s3_d" >&nbsp;
+                                <label><input type="checkbox" class="radio_but" name="exp_s4" id="exp_s4" value="1"></label>
+                                <input ><input type="text" class="name_medium" style="width:220px" name="exp_s4_d" id="exp_s4_d" >
+                                
+                                <button class="search_btn" onclick="search_submit()" class="btn btn-default">ค้นหา</button>
 
                         </div>
                         <hr style="border-color: black">
@@ -245,7 +239,116 @@
                                         </button>
                                     </div>
                                     <div class="modal-body" >
-                                        ...
+                                        <form name="edit_patient" id="edit_patient" action="#" method="POST">
+                                            <label class="label_1">วัน/เดือน/ปี </label> &nbsp; <input  type="text" value="06/05/2537" name="rec_day_s" id="rec_day_s" class="rec_day" > 
+                                            <span class="error_report" id="rec_day_error" ></span>
+                                            <br>
+
+                                            <label class="label_1" >คำนำหน้านาม </label>  
+                                            &nbsp;<label><input type="radio" class="radio_but" name="prefix" value="1" > ด.ญ. &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="prefix" value="2" > ด.ช. &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="prefix" value="3" > นาย &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="prefix" value="4" > นาง &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="prefix" value="5" > นางสาว &nbsp; </label>
+                                            <span class="error_report" id="prefix_error" ></span>
+                                            <label class="label_1" >ชื่อ</label> <input type="text" class="name_medium" name="name" id="name"> 
+                                            <span class="error_report" id="name_error" ></span>
+                                            &nbsp;<label  class="label_1">นามสกุล</label> <input type="text" class="name_medium" name="lastname" id="lastname"> 
+                                            <span class="error_report" id="lastname_error" ></span>
+                                            <br>
+
+                                            <label class="label_1" >เพศ </label>  
+                                            &nbsp;<label><input type="radio" class="radio_but" name="gender"  value="1" > ชาย &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="gender"  value="2" > หญิง &nbsp; </label>
+                                            <span class="error_report" id="gender_error" ></span>
+                                            <label class="label_1">วัน/เดือน/ปีเกิด </label> &nbsp; <input type="text" name="birthday_s" id="birthday_s" class="rec_day" >
+                                            <span class="error_report" id="birthday_s_error" ></span>
+                                            <label  class="label_1">เลขที่บัตรประชาชน</label> <input type="text" class="name_medium" maxlength="13" name="id_card" id="id_card">
+                                            <span class="error_report" id="id_card_error" ></span>
+                                            <br>
+
+                                            <label class="label_1" >น้ำหนัก </label>  
+                                            <input type="text" class="text_short" name="weight" id="weight">
+                                            <span class="error_report" id="w_error" ></span> 
+                                            &nbsp; <label class="label_1" >ส่วนสูง </label>  
+                                            <input type="text" class="text_short" name="height" id="height"> 
+                                            <span class="error_report" id="h_error" ></span> 
+                                            &nbsp; <label class="label_1" >ตำหนิ/แผลเป็น </label>  
+                                            <input type="text" class="rec_day" style="width: 300px" name="scar" id="scar"> 
+                                            <span class="error_report" id="scar_error" ></span> 
+                                            <br>
+                                            <label class="label_1">สถานภาพ</label> 
+                                            &nbsp;<label><input type="radio" class="radio_but" name="status" value="1" > โสด &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="status" value="2" > สมรส &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="status" value="3" > หย่าร้าง &nbsp; </label>
+                                            &nbsp;<label><input type="radio" class="radio_but" name="status" value="4" > มีบุตร &nbsp; </label>
+                                            <span class="error_report" id="status_error" ></span>
+                                            &nbsp; <label class="label_1" >อาชีพ</label> <input type="text" name="job" id="job" class="name_medium" > 
+                                            <hr>
+                                            <label class="label_1">ที่อยู่หรือสถานที่ติดต่อได้</label>
+                                            &nbsp;บ้านเลขที่ <input type="text" class="text_short" name="h_no" id="h_no"> 
+                                            &nbsp; ถนน <input type="text" class="text_short" name="road_no" id="road_no">
+                                            &nbsp; ตำบล/แขวง <input type="text" class="text_short" name="tumbon" id="tumbon">
+                                            <br>
+
+                                            อำเภอ <input type="text" class="text_short" name="aumpur" id="aumpur"> 
+                                            &nbsp; จังหวัด <input type="text" class="text_short" name="province" id="province">
+                                            &nbsp; โทรศัพท์ที่สามารถติดต่อได้ <input type="text" class="name_medium" name="tel" id="tel">
+                                            <br>
+
+                                            โทรสาร <input style="margin-top: 7px" type="text" class="name_medium" name="fax" id="fax"> 
+                                            &nbsp; Line ID <input type="text" class="name_medium" name="line" id="line">
+                                            &nbsp; E-mail <input type="email" class="name_medium" name="email" id="email">
+                                            <hr>
+
+                                            <label class="label_1" >วุฒิการศึการสูงสุด</label> &nbsp; <input type="text" name="degree" id="degree" class="name_medium" style="width: 400px;margin-top:7px;">
+                                            <br>
+
+                                            <label class="label_1">ประสบการณ์ด้านการเรียนการสอน ทีเกี่ยวข้องกับนักศึกษาแพทย์ แพทย์ใช้ทุน/แพทย์ประจำบ้าน ฯลฯ</label>
+                                            <span class="error_report" id="exp_error" ></span>
+                                            <br>
+                                            <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" name="exp"  value="1" /> เคย </label> 
+                                            <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_1" id="exp_1" value="1" /> ซักประวัติอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_1_detail" id="exp_1_detail">
+                                            <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_2" id="exp_2" value="2"/> ให้คำแนะนำอาการ/โรค </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_2_detail" id="exp_2_detail">
+                                            <br>
+                                            <label ><input type="checkbox" class="radio_but" style="margin-left:78px;"  name="exp_3" id="exp_3" value="3"/> ตรวจร่างกายอาการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_3_detail" id="exp_3_detail">
+                                            <label ><input type="checkbox" class="radio_but" style="margin-left:10px;"  name="exp_4" id="exp_4" value="4"/> การทำหัตถการ </label>  <input type="text" class="name_medium" style="width: 250px"  name="exp_4_detail" id="exp_4_detail">
+                                            <br>
+                                            <label class="label_1"><input type="radio" class="radio_but" style="margin-left:20px;" name="exp" value="2" /> ไม่เคย </label> 
+                                            <hr>
+
+                                            <label class="label_1">ประวัติการเจ็บป่วยเข้ารับการรักษาในโรงพยาบาลการผ่าตัดหรือได้รับบริการทางการแพทย์อย่างไรบ้าง</label>
+                                            <br>
+                                            <textarea name="admission" id="admission" class="form-control" style="border-color: black;"></textarea> 
+                                            <br>
+
+                                            <label class="label_1" >มีโรคประจำตัวอะไรบ้าง</label> 
+                                            &nbsp; <input type="text" class="name_medium" name="disease" id="disease" style="width: 700px;"><br>
+                                            <label class="label_1">เหตุผลในการสมัครเป็นผู้ป่วยจำลอง</label>
+                                            <br>
+                                            <textarea name="reason" id="reason" class="form-control" style="border-color: black;"></textarea> 
+                                            <br>
+
+                                            <label class="label_1">ท่านมีความคิดเห็นอย่างไรบ้าง เกี่ยวกับการใช้ผู้ป่วยจำลองมาช่วยในการเรียนการสอน</label>
+                                            <br>
+                                            <textarea name="opinion" id="opinion" class="form-control" style="border-color: black;"></textarea> 
+                                            <br>
+
+                                            <label class="label_1">ท่านรู้ข่าวการรับสมัครผู้ป่วยจำลองนี้จากที่ใด หรือด้วยวิธีการใด</label> 
+                                            <span class="error_report" id="news_error" ></span>
+                                            <br>
+                                            &nbsp; <label><input type="checkbox" class="radio_but" name="news_email" id="news_email" value="1"> อีเมล์</label>
+                                            &nbsp; <label><input type="checkbox" class="radio_but" name="news_website" id="news_website" value="2"> เว็บไซต์</label>
+                                            &nbsp; <label><input type="checkbox" class="radio_but" name="news_paper" id="news_paper" value="3"> ป้ายโฆษณา/ใบปลิว</label>
+                                            &nbsp; <label><input type="checkbox" class="radio_but" name="news_people" id="news_people" value="4"> คำแนะนำจากบุคคลอื่น</label>
+                                            &nbsp; <label><input type="checkbox" class="radio_but" name="news_other" id="news_other" value="5"> อื่นๆ</label> <input type="text" class="name_medium" name="other_detail" id="other_detail">
+                                            <br>
+                                            <label class="label_1" >ถ้าท่านได้รับเลือกเป็นผู้ป่วยจำลองแล้ว ท่านจะสามารถมาทำงานได้</label>
+                                            <br>
+                                            <label><input type="radio" name="time_to_come" value="1">&nbsp;ทุกครั้งเมื่อคณะแพทยศาสตร์ </label><br>
+                                            <label><input type="radio" name="time_to_come" value="2">&nbsp;บางครั้งตามแต่เวลาและโอกาสจะเอื้ออำนวย </label><br>
+                                            <label><input type="radio" name="time_to_come" value="3">&nbsp;ไม่แน่ใจยังไม่ได้ตัดสิน </label><br>
+                                        </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -300,12 +403,11 @@
             monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
             monthNamesShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.']};
         $("#datepicker2").datepicker(option_select);
+        $("#rec_day_s").datepicker(option_select);
         $("#birthday").datepicker(option_select);
+        $("#birthday_s").datepicker(option_select);
 
     });
 </script>
 
-<div id="dialog" title="Basic dialog">
-    <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
 
