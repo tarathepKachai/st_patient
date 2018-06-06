@@ -139,7 +139,8 @@
                             &nbsp; <label><input type="checkbox" class="radio_but" name="news_people" id="news_people" value="4"> คำแนะนำจากบุคคลอื่น</label>
                             &nbsp; <label><input type="checkbox" class="radio_but" name="news_other" id="news_other" value="5"> อื่นๆ</label> <input type="text" class="name_medium" name="other_detail" id="other_detail">
                             <br>
-                            <label class="label_1" >ถ้าท่านได้รับเลือกเป็นผู้ป่วยจำลองแล้ว ท่านจะสามารถมาทำงานได้</label><span class="error_report" id="come_error" ></span>
+                            <label class="label_1" >ถ้าท่านได้รับเลือกเป็นผู้ป่วยจำลองแล้ว ท่านจะสามารถมาทำงานได้</label>
+                            &nbsp;<span class="error_report" id="come_error" ></span>
                             <br>
                             <label><input type="radio" name="time_to_come" value="1"> ทุกครั้งเมื่อคณะแพทยศาสตร์ </label><br>
                             <label><input type="radio" name="time_to_come" value="2"> บางครั้งตามแต่เวลาและโอกาสจะเอื้ออำนวย </label><br>
@@ -184,17 +185,18 @@
                             &nbsp;<label><input type="radio" class="radio_but" name="gender_s3" value="2">หญิง</label>
                             &nbsp;<label class="label_1">ประสบการณ์</label> &nbsp;
                             <label><input type="checkbox" class="radio_but" name="exp_s1" id="exp_s1" value="1"> ซักประวัติอาการ </label> 
-                            <input type="text" class="name_medium" style="width: 220px" name="exp_s1_d" id="exp_s1_d" > &nbsp;
-                            <label><input type="checkbox" class="radio_but" name="exp_s2"  id="exp_s2" value="1"> ให้คำแนะนำอาการ/โรค 
-                                <input type="text" class="name_medium" style="width: 220px" name="exp_s2_d" id="exp_s2_d" >
-                                <br>
-                                
-                                <label ><input type="checkbox" class="radio_but" name="exp_s3" id="exp_s3" value="1"></label>
-                                <input type="text" class="name_medium" style="width:220px" name="exp_s3_d" id="exp_s3_d" >&nbsp;
-                                <label><input type="checkbox" class="radio_but" name="exp_s4" id="exp_s4" value="1"></label>
-                                <input ><input type="text" class="name_medium" style="width:220px" name="exp_s4_d" id="exp_s4_d" >
-                                
-                                <button class="search_btn" onclick="search_submit()" class="btn btn-default">ค้นหา</button>
+                            <input type="text" class="name_medium" style="width: 200px" name="exp_s1_d" id="exp_s1_d" > &nbsp;
+
+                            <label><input type="checkbox" class="radio_but" name="exp_s1" id="exp_s2" value="1"> ให้คำแนะนำอาการ/โรค </label> 
+                            <input type="text" class="name_medium" style="width: 200px" name="exp_s1_d" id="exp_s2_d" > &nbsp;
+                            <br>
+
+                            <label style="margin-left: 245px" ><input type="checkbox" class="radio_but" name="exp_s3" id="exp_s3" value="1">&nbspตรวจร่างกายอาการ</label>
+                            <input type="text" class="name_medium" style="width:200px" name="exp_s3_d" id="exp_s3_d" >&nbsp;
+                            <label><input type="checkbox" class="radio_but" name="exp_s4" id="exp_s4" value="1">&nbsp;การทำหัตถการ</label>
+                            &nbsp;<input type="text" class="name_medium" style="width:200px" name="exp_s4_d" id="exp_s4_d" >
+
+                            <button class="search_btn" onclick="search_submit()" class="btn btn-default">ค้นหา</button>
 
                         </div>
                         <hr style="border-color: black">
@@ -373,7 +375,7 @@
             </tr>
             <tr>
                 <td class="menu_choice" id="choice_3">
-                    รีพอร์ท
+                    รายงาน
                 </td>
             </tr>
             <tr>

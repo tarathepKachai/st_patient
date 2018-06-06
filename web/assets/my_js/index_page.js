@@ -284,29 +284,35 @@ function submit() {
 //    }
 
     if (!$("input[name='gender']").is(':checked')) {
-        $("#gender_error").html("เลือกเพศ");
+        $("#gender_error").html("กรุณาเลือกเพศ");
     } else {
         $("#gender_error").html("");
     }
 
     if (!$("input[name='prefix']").is(':checked')) {
-        $("#prefix_error").html("เลือกคำนำหน้านาม");
+        $("#prefix_error").html("กรุณาเลือกคำนำหน้านาม");
     } else {
         $("#prefix_error").html("");
     }
 
     if (!$("input[name='status']").is(':checked')) {
-        $("#status_error").html("เลือกสถานภาพ");
+        $("#status_error").html("กรุณาเลือกสถานภาพ");
     } else {
         $("#status_error").html("");
     }
-
+    
+    if (!$("input[name='time_to_come']").is(':checked')) {
+        $("#come_error").html("กรุณาเลือกข้อมูล");
+    } else {
+        $("#come_error").html("");
+    }
+    
     if (!$("input[name='exp']").is(':checked')) {
-        $("#exp_error").html("เลือกข้อมูล");
+        $("#exp_error").html("กรุณาเลือกข้อมูล");
     } else {
         var value = $('input[name=exp]:checked').val();
         if (value === "1" && !$("input[name='exp_1']").is(':checked') && !$("input[name='exp_2']").is(':checked') && !$("input[name='exp_3']").is(':checked') && !$("input[name='exp_4']").is(':checked')) {
-            $("#exp_error").html("เลือกข้อมูล");
+            $("#exp_error").html("กรุณาเลือกข้อมูล");
         } else {
             $("#exp_error").html("");
         }
@@ -314,7 +320,7 @@ function submit() {
     }
 
     if (!$("input[name='exp']").is(':checked')) {
-        $("#exp_error").html("เลือกข้อมูล");
+        $("#exp_error").html("กรุณาเลือกข้อมูล");
     } else {
         $("#exp_error").html("");
     }
@@ -412,7 +418,7 @@ function checkbox_check(){
    if(!$('input[type="checkbox"][name="news_email"]').is(":checked")&&!$('input[type="checkbox"][name="news_website"]').is(":checked")
            &&!$('input[type="checkbox"][name="news_paper"]').is(":checked")&&!$('input[type="checkbox"][name="news_people"]').is(":checked")
            &&!$('input[type="checkbox"][name="news_other"]').is(":checked")){
-       $("#news_error").html("กรุณาเลือก");
+       $("#news_error").html("กรุณาเลือกข้อมูล");
        return false;
       
    }else{
