@@ -361,7 +361,7 @@
                         </div>
                     </div>
                     <div style="display: none;" id="choice3">
-                        3
+                        <button>ดูรายงาน</button>
                     </div>
 
 
