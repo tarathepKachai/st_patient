@@ -55,3 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['user/index'] = 'user_Controller/main_page';
 $route['user/test'] = 'user_Controller/test';
+
+$route['guzzle'] = 'user_Controller/guzzle';

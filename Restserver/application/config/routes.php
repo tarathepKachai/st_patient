@@ -58,3 +58,6 @@ $route['API'] = "Rest_server";
 $route['get_test'] = "api/News/user";
 
 $route['get_test2'] = "api/News/usera";
+$route['patient/save']="api/Patient/patient_save";
+$route['patient/user']="api/Patient/user";
+
