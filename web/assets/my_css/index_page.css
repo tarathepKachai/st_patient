@@ -167,29 +167,70 @@ div.scrollable {
     padding-left: 3px;
     padding-right: 3px;
     margin-left:10px;
-    
+
 }
 
 .modal-edit{
-   max-width: 75%;
-   
+    max-width: 75%;
+
 }
 
-table .search_result {
+table #search_result {
     width: 95%;
     text-align: center;
+
+}
+
+
+.button-search {
+    background: #158bd9;
+    background-image: -webkit-linear-gradient(top, #158bd9, #3477a1);
+    background-image: -moz-linear-gradient(top, #158bd9, #3477a1);
+    background-image: -ms-linear-gradient(top, #158bd9, #3477a1);
+    background-image: -o-linear-gradient(top, #158bd9, #3477a1);
+    background-image: linear-gradient(to bottom, #158bd9, #3477a1);
+    -webkit-border-radius: 6;
+    -moz-border-radius: 6;
+    border-radius: 6px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+    border:1px solid transparent;
+}
+
+.button-search:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+tbody .search_data tr:hover{
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+.input-card{
+    width: 30px;
+    height:25px;
+    text-align: center;
     border: 1px solid black;
-   
+      border-radius: 2px;
 }
 
-table .search_result th,td{
-    border:1px solid black;
-     padding:3px 0px 3px 0px; 
-}
-
-table .search_result td{
-    border:1px solid black;
-
+.input-border{
+    border: 1px solid black;
+    border-radius: 2px;
 }
 
 

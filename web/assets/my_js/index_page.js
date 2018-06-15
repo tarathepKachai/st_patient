@@ -2,11 +2,12 @@ var check_sub = 0;
 
 $(document).ready(function () {
 
+    //alert(api_url);
 
 
-    $("input[name='gender']").click(function () {
-        $("#gender_error").html("");
-    });
+//    $("input[name='gender']").click(function () {
+//        $("#gender_error").html("");
+//    });
 
     $("input[name='status']").click(function () {
         $("#status_error").html("");
@@ -16,7 +17,14 @@ $(document).ready(function () {
         $("#prefix_error").html("");
     });
 
-   // var input_vali = '#name, #lastname,#weight,#height,#id_card,#birthday,#datepicker2,#scar';
+    $('form#patient_save :input').keydown(function (e) {
+        if (e.which === 13) {
+            var index = $('input').index(this) + 1;
+            $('input').eq(index).focus();
+        }
+    });
+
+    // var input_vali = '#name, #lastname,#weight,#height,#id_card,#birthday,#rec_day,#scar';
 
 //    $(input_vali).focusout(function () {
 //        if (this.value !== null) {
@@ -46,40 +54,17 @@ $(document).ready(function () {
         }
     });
 
-    $("#datepicker2").click(function () {
+    $("#rec_day").click(function () {
 
-        $('#datepicker2').css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
+        $('#rec_day').css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
     });
 
     $("#birthday").click(function () {
 
         $('#birthday').css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
     });
-    
-    $("#news_email").click(function () {
-        
-        $('#news_error').html("");
-    });
-    
-    $("#news_website").click(function () {
 
-        $('#news_error').html("");
-    });
     
-    $("#news_paper").click(function () {
-
-        $('#news_error').html("");
-    });
-    
-    $("#news_people").click(function () {
-
-        $('#news_error').html("");
-    });
-    
-    $("#news_other").click(function () {
-
-        $('#news_error').html("");
-    });
 
     $("#choice_1").click(function () {
         $("#choice_1").removeClass("disable_choice");
@@ -126,6 +111,15 @@ $(document).ready(function () {
         $("#choice3").css("display", "block");
     });
 
+
+    $("#test").submit(function (e) {
+        console.log("aa");
+        e.preventDefault();
+
+
+
+
+    });
 //    $('input[name="exp"]').click(function () {
 //        var value = $('input[name=exp]:checked').val();
 //        if (value === "1") {
@@ -196,14 +190,14 @@ $(document).ready(function () {
 
 function submit() {
 
-//    if ($("#datepicker2").val() === "") {
-//        $("#datepicker2").attr("placeholder", "กรอกวันที่");
-//        $("#datepicker2").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//        //$("#rec_day_error").html("กรอกวันที่");
+//    if ($("#rec_day").val() === "") {
+//        $("#rec_day").attr("placeholder", "กรอกวันที่");
+//        $("#rec_day").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
+//        //$("#_error").html("กรอกวันที่");
 //    } else {
-//        //$("#rec_day_error").html("");
-//        $("#datepicker2").attr("placeholder", "");
-//        $("#datepicker2").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
+//        //$("#_error").html("");
+//        $("#rec_day").attr("placeholder", "");
+//        $("#rec_day").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
 //    }
 //
 //
@@ -283,11 +277,13 @@ function submit() {
 //        $("#scar").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
 //    }
 
-    if (!$("input[name='gender']").is(':checked')) {
-        $("#gender_error").html("กรุณาเลือกเพศ");
-    } else {
-        $("#gender_error").html("");
-    }
+
+    // VALIDATE START
+//    if (!$("input[name='gender']").is(':checked')) {
+//        $("#gender_error").html("กรุณาเลือกเพศ");
+//    } else {
+//        $("#gender_error").html("");
+//    }
 
     if (!$("input[name='prefix']").is(':checked')) {
         $("#prefix_error").html("กรุณาเลือกคำนำหน้านาม");
@@ -300,13 +296,13 @@ function submit() {
     } else {
         $("#status_error").html("");
     }
-    
+
     if (!$("input[name='time_to_come']").is(':checked')) {
         $("#come_error").html("กรุณาเลือกข้อมูล");
     } else {
         $("#come_error").html("");
     }
-    
+
     if (!$("input[name='exp']").is(':checked')) {
         $("#exp_error").html("กรุณาเลือกข้อมูล");
     } else {
@@ -329,7 +325,7 @@ function submit() {
             function (i, el) {
                 var id_input = el.id;
 
-                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" && id_input !== "other_detail") {
+                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" ) {
 //                    i++;
 //                    console.log(i);
                     if ((!el.value || el.value === '')) {
@@ -345,11 +341,11 @@ function submit() {
                     }
                 }
             });
-            
-             
-             var check_news = checkbox_check();
-              
-             
+
+
+    var check_news = checkbox_check();
+
+
     $('textarea').each(
             function (i, el) {
 
@@ -367,27 +363,34 @@ function submit() {
             });
 
     var check = check_submit(check_news);
+
+//    VALIDATE END
+
+    // var check = true;
     //console.log(check);
     if (check === false) {
         alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     } else {
-        alert("สำเร็จ");
+
+        save_data();
+
     }
 
 
 }
 
 function check_submit(check_news) {
-
+    console.log(check_news);
+    console.log($("#patient_save").serialize());
     var suc = "1";
     $('form#patient_save :input').each(
             function (i, el) {
                 var id_input = el.id;
 
-                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" && id_input !== "other_detail") {
+                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" ) {
                     if ((!el.value || el.value === '')) {
-                      suc = "0";
-                      
+                        suc = "0";
+                        console.log(el.id);
                     } else {
                         // do nothing
                     }
@@ -397,36 +400,160 @@ function check_submit(check_news) {
     $('textarea').each(
             function (i, el) {
 
-                if (!el.value || el.value === '') {
-                   suc = "0";
-                   //console.log(el.id);
+                if ((!$("#" + el.id).val() || $("#" + el.id).val() === '')) {
+                    suc = "0";
+                    console.log(el.id + ">>" + $("#" + el.id).val());
+
                 } else {
-                   //do nothing
+                    // do nothing
                 }
             });
-            
-            if(suc==="0"||check_news===false){
-                return false;
-            }else{
-                return true;
-            }
+
+    if (suc === "0" || check_news === false) {
+        return false;
+    } else {
+        return true;
+    }
 
 }
 
-function checkbox_check(){
+function checkbox_check() {
     var checked = 1;
-   if(!$('input[type="checkbox"][name="news_email"]').is(":checked")&&!$('input[type="checkbox"][name="news_website"]').is(":checked")
-           &&!$('input[type="checkbox"][name="news_paper"]').is(":checked")&&!$('input[type="checkbox"][name="news_people"]').is(":checked")
-           &&!$('input[type="checkbox"][name="news_other"]').is(":checked")){
-       $("#news_error").html("กรุณาเลือกข้อมูล");
-       return false;
-      
-   }else{
-       return true;
-   }
+    if (!$('input[type="checkbox"][name="news_email"]').is(":checked") && !$('input[type="checkbox"][name="news_website"]').is(":checked")
+            && !$('input[type="checkbox"][name="news_paper"]').is(":checked") && !$('input[type="checkbox"][name="news_people"]').is(":checked")
+            && !$('input[type="checkbox"][name="news_other"]').is(":checked")) {
+        $("#news_error").html("กรุณาเลือกข้อมูล");
+        return false;
+
+    } else {
+        return true;
+    }
 }
 
-function search_submit(){
-    
+function search_submit() {
+
+
+
 }
+function test_t() {
+    $.ajax({
+        url: client_url + "guzzle",
+        type: "POST",
+//        contentType: false,
+//        processData: false,
+        dataType: "JSON",
+//        data: {
+//            username: $("#username").val()
+//        },
+        data: $("#test").serialize(),
+        success: function (data) {
+            console.log(data);
+        }, error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR + " " + textStatus + " " + errorThrown);
+        }
+    });
+}
+
+function save_data() {
+//    $.ajax({
+//        url: client_url + "guzzle",
+//        type: "POST",
+//        dataType: "JSON",
+//        data: $("#test").serialize(),
+//        success: function (data) {
+//            console.log(data);
+//        }, error: function (jqXHR, textStatus, errorThrown) {
+//            console.log(jqXHR + " " + textStatus + " " + errorThrown);
+//        }
+//    });
+    console.log($("#patient_save").serialize());
+
+    alert("success");
+}
+
+function view_user(id) {
+    $("#user_sp").modal("show");
+
+}
+
+// id card
+
+function Numbers(e) {
+    var keynum;
+    var keychar;
+    var numcheck;
+    if (window.event) {// IE
+        keynum = e.keyCode;
+    } else if (e.which) {// Netscape/Firefox/Opera
+        keynum = e.which;
+    }
+    if (keynum == 13 || keynum == 8 || typeof (keynum) == "undefined") {
+        return true;
+    }
+    keychar = String.fromCharCode(keynum);
+    numcheck = /^[0-9]$/;
+    return numcheck.test(keychar);
+}
+
+function keyup(obj, e) {
+    var keynum;
+    var keychar;
+    var id = '';
+    if (window.event) {// IE
+        keynum = e.keyCode;
+    } else if (e.which) {// Netscape/Firefox/Opera
+        keynum = e.which;
+    }
+    keychar = String.fromCharCode(keynum);
+
+    var tagInput = document.getElementsByTagName('input');
+    for (i = 0; i <= tagInput.length; i++) {
+        if (tagInput[i] == obj) {
+            var prevObj = tagInput[i - 1];
+            var nextObj = tagInput[i + 1];
+            break;
+        }
+    }
+    if (obj.value.length == 0 && keynum == 8)
+        prevObj.focus();
+
+    if (obj.value.length == obj.getAttribute('maxlength')) {
+        for (i = 0; i <= tagInput.length; i++) {
+            if (tagInput[i].id.substring(0, 5) == 'txtID') {
+                if (tagInput[i].value.length == tagInput[i].getAttribute('maxlength')) {
+                    id += tagInput[i].value;
+                    if (tagInput[i].id == 'txtID13')
+                        break;
+                } else {
+                    tagInput[i].focus();
+                    return;
+                }
+            }
+        }
+        if (checkID(id))
+            nextObj.focus();
+        else
+            alert('รหัสประชาชนไม่ถูกต้อง');
+        nextObj.focus();
+    }
+
+}
+
+function checkID(id) {
+//    console.log(id.length);
+//    if (id.length != 13) {
+//        console.log("len");
+//        return false;
+//    }
+//
+//    for (i = 0, sum = 0; i < 12; i++)
+//        sum += parseFloat(id.charAt(i)) * (13 - i);
+//    if ((11 - sum % 11) % 10 != parseFloat(id.charAt(12))) {
+//        console.log(sum);
+//        return false;
+//
+//    }
+    return true;
+}
+
 

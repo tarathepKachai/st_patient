@@ -22,28 +22,33 @@ class Patient extends \Restserver\Libraries\REST_Controller {
     function __construct() {
         // Construct the parent class
         parent::__construct();
-
-        // Configure limits on our controller methods
-        // Ensure you have created the 'limits' table and enabled 'limits' within application/config/rest.php
+        $this->load->model("Patient_model");
     }
 
     public function patient_save_post() {
-        
+
         $data = array(
             "input" => $this->post("username")
         );
-        
+
         $this->response($data, 200);
         // แสดงรายการข่าวทั้งหมด
     }
-    
-    public function usera_POST() {
+
+    public function user_get() {
         $data = array(
             "status" => "success",
             "username" => $this->get("username")
         );
         $this->response($data, 200);
         // แสดงรายการข่าวทั้งหมด
+    }
+
+    public function prefix_get() {
+        
+        $data = $this->Patient_model->get_prefix_list();
+        
+        $this->response($data,200);
     }
 
 }
