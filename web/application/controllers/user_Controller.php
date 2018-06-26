@@ -115,22 +115,22 @@ class user_Controller extends CI_Controller {
         $data['title'] = "หน้าต่างแสดงอาการ/โรค";
 
 
-        $client = new \GuzzleHttp\Client(); //['http_errors' => false]
-        #This url define speific Target for guzzle
-        $url = 'http://localhost/st_patient/Restserver/get_sp_info_by_id';
-
-        #guzzle
-        
-        //if($this->input->post("username")==null){
-        $param = ['form_params' => ['id' => $id]
-        ];
-        
-                # guzzle post request example with form parameter
-            $response = $client->request('POST', $url, $param
-            );
-            #guzzle repose for future use
-           
-            $data['sp_info'] =  json_decode($response->getBody());
+//        $client = new \GuzzleHttp\Client(); //['http_errors' => false]
+//        #This url define speific Target for guzzle
+//        $url = 'http://localhost/st_patient/Restserver/get_sp_info_by_id';
+//
+//        #guzzle
+//        
+//        //if($this->input->post("username")==null){
+//        $param = ['form_params' => ['id' => $id]
+//        ];
+//        
+//                # guzzle post request example with form parameter
+//            $response = $client->request('POST', $url, $param
+//            );
+//            #guzzle repose for future use
+//           
+//            $data['sp_info'] =  json_decode($response->getBody());
             
             
             $data['id'] = $id;

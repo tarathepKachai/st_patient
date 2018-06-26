@@ -62,26 +62,28 @@ function save_sp_info() {
         data: $("#form_sp_info").serialize(),
         success: function (data) {
             $.confirm({
-                title: 'Logout?',
-                content: 'Your time is out, you will be automatically logged out in 10 seconds.',
-                autoClose: 'logoutUser|3000',
+                title: 'แจ้งเตือน',
+                content: 'เพิ่มข้อมูลสำเร็จ!',
+                type: 'green',
+                typeAnimated: true,
+                autoClose: 'ok|3000',
                 buttons: {
-                    logoutUser: {
-                        text: 'logout myself',
+                    ok: {
+                        text: 'ok',
                         action: function () {
-                           window.location.reload();
+                            window.location.reload();
                         }
-                    },
-                    cancel: function () {
-                        $.alert('canceled');
                     }
                 }
             });
-            
+
         }
     });
 
 }
+
+
+
 
 
 

@@ -6,11 +6,11 @@
 
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                  ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                      ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                  ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />
@@ -55,27 +55,7 @@ function convert_date_be($date) {
             <th>หมายเหตุ</th>
             </thead>
             <tbody id="sp_info_data" >
-                <?php
-                if (isset($sp_info->error)) {
-                    ?>
-                    <tr>
-                        <td colspan="5" class="td-center"> ไม่มีข้อมูล </td>
-                    </tr>
-                    <?php
-                } else {
-                    foreach ($sp_info as $row) {
-                        ?>
-                        <tr>
-                            <td> <?php echo convert_date_be($row->date); ?> </td>
-                            <td> <?php echo $row->sp_act_id; ?> </td>
-                            <td> <?php echo $row->symp_id; ?> </td>
-                            <td> <?php echo $row->evaluation; ?> </td>
-                            <td> <?php echo $row->comment; ?> </td>
-                        </tr>
-                        <?php
-                    }
-                }
-                ?>
+
             </tbody>
         </table>
     </div>
@@ -120,7 +100,7 @@ function convert_date_be($date) {
                     <div class="col">
 
 
-                        </select>
+
                         <label class="label_1">หมายเหตุ</label>
                         <textarea type="text" class="form-control" style="border-color: black;" id="comment" name="comment" ></textarea>
                     </div>
@@ -145,7 +125,7 @@ function convert_date_be($date) {
     var person_id =<?php echo $id; ?>;
     $(document).ready(function () {
 
-        
+
         var d = new Date();
         var toDay = d.getDate() + '/'
                 + (d.getMonth() + 1) + '/'
@@ -185,11 +165,11 @@ function convert_date_be($date) {
         };
         $.datepicker.setDefaults($.datepicker.regional['th']);
 
-        
-            $("#form_sp_info input#date").datepicker("setDate", new Date());
+
+        $("#form_sp_info input#date").datepicker("setDate", new Date());
 
 
-       
+
 
 
         $("#person_id").val(person_id);
@@ -204,8 +184,94 @@ function convert_date_be($date) {
                 var res = data[0];
                 var name = res.prefix + " " + res.fname + " " + res.lname;
                 $("#name").html(name);
+
+
             }
         });
+
+        $.ajax({
+            url: api_url + "get_sp_info_by_id",
+            type: "POST",
+            data: {
+                id: person_id
+            },
+            success: function (data) {
+
+                var str = "";
+                console.log(data);
+                if (data.error !== "0") {
+                    $.each(data, function (idx, obj) {
+                        console.log("ok");
+                        str = "";
+                        str += "<tr>";
+                        str += "<td>";
+                        str += convert_date_ad(obj.date);
+                        str += "</td>";
+                        str += "<td>";
+                        str += obj.sp_act_id;
+                        str += "</td>";
+                        str += "<td>";
+                        str += obj.symp_id;
+                        str += "</td>";
+                        str += "<td>";
+
+                        str += "<select id='eva_" + obj.sp_info_id + "' name='eva_" + obj.sp_info_id + "' onChange='eva(this.id)' ></select> ";
+
+                        str += "</td>";
+                        str += "<td>";
+                        str += obj.comment;
+                        str += "</td>";
+                        str += "</tr>";
+
+                        $("#sp_info_data").append(str);
+
+                        var j = "1";
+                        $.ajax({
+                            url: api_url + "evaluation_list",
+                            type: "get",
+                            success: function (data) {
+                                $.each(data, function (idx2, obj2) {
+                                    if (j === "1") {
+                                        $('#eva_' + obj.sp_info_id).append('<option value="0" >ประเมิน</option>');
+                                        j++;
+                                    }
+                                    if (obj.evaluation === obj2.eva_id) {
+                                        $('#eva_' + obj.sp_info_id).append('<option selected value="' + obj2.eva_id + '" >' + obj2.eva_id + '</option>');
+                                    } else {
+                                        $('#eva_' + obj.sp_info_id).append('<option value="' + obj2.eva_id + '" >' + obj2.eva_id + '</option>');
+                                    }
+
+                                });
+
+
+                            }
+                        });
+
+//                        if (obj.evaluation === null || obj.evaluation === "") {
+//
+//                        } else {
+//                            console.log(obj.sp_info_id + "/" + obj.evaluation);
+//
+//                            $('#eva_' + obj.sp_info_id + ' option[value="' + obj.evaluation + '"]').attr("selected", true);
+//                        }
+                    });
+
+
+
+
+                } else {
+                    console.log("xx");
+                    str += "<tr><td colspan='5'>ไม่มีข้อมูล</td></tr>";
+                    $("#sp_info_data").html(str);
+                }
+
+
+            }
+        });
+
+
+
+
 
         $('#add_sp_modal').on('hidden.bs.modal', function () {
             $("#form_sp_info")[0].reset();
@@ -218,7 +284,7 @@ function convert_date_be($date) {
 //                url: "http://localhost/st_patient/Restserver/api/Patient/sp_info_data_table",
 //                type: 'POST',
 //                data: {
-//                    id: <?php //echo $id;                ?>
+//                    id: <?php //echo $id;                                            ?>
 //                },
 //                "dataSrc": function (json) {
 //                    //Make your callback here.
@@ -239,6 +305,23 @@ function convert_date_be($date) {
         var year = parseInt(array[0]) + 543;
 
         return day + "/" + month + "/" + year;
+    }
+
+    function eva(sp_info_id) {
+        //alert(sp_info_id + "//" + person_id);
+        var temp = sp_info_id.split("_")
+        var id = temp[1];
+        console.log(id);
+//        $.ajax({
+//            url: api_url + "update_evaluation",
+//            type:"POST",
+//            data: {
+//                sp_info_id: id,
+//                person_id: person_id,
+//                
+//            }
+//        });
+
     }
 
 
