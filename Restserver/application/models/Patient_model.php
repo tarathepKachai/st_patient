@@ -2,33 +2,157 @@
 
 class Patient_model extends CI_Model {
 
-
-
     function __construct() {
         parent::__construct(); // construct the Model class
     }
 
     public function get_prefix_list() {
+        //$query = $this->db->get('prefix');
         $query = $this->db->get('prefix');
-        
-        
+
         return $query->result();
     }
 
-    public function insert_entry() {
-        $this->title = $_POST['title']; // please read the below note
-        $this->content = $_POST['content'];
-        $this->date = time();
+    public function get_person_status_list() {
+        $query = $this->db->get('person_status');
 
-        $this->db->insert('entries', $this);
+        return $query->result();
     }
 
-    public function update_entry() {
-        $this->title = $_POST['title'];
-        $this->content = $_POST['content'];
-        $this->date = time();
+    public function get_edu_list() {
+        $query = $this->db->get("education");
 
-        $this->db->update('entries', $this, array('id' => $_POST['id']));
+        return $query->result();
+    }
+
+    public function get_time_sp_list() {
+        $query = $this->db->get("time_sp");
+
+        return $query->result();
+    }
+
+    public function get_sp_list() {
+//        $sql = 'SELECT * FROM person_info ps INNER JOIN prefix p on ps.prefix = p.id ';
+//        $query = $this->db->query("person_info");
+        $this->db->select('*');
+        $this->db->from('person_info');
+        $this->db->join('prefix', 'person_info.prefix = prefix.id');
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+    
+    public function get_evaluation_list(){
+        
+        $query = $this->db->get("evaluation");
+        
+        return $query->result();
+        
+    }
+
+    public function get_sp_by_id($id) {
+        $this->db->select('*');
+        $this->db->from('person_info');
+        //$this->db->join('prefix', 'person_info.prefix = prefix.id');
+        $this->db->where("person_id", $id);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+    
+    public function get_sp_data($id) {
+        $this->db->select('*');
+        $this->db->from('person_info');
+        $this->db->join('prefix', 'person_info.prefix = prefix.id');
+        $this->db->where("person_id", $id);
+        $query = $this->db->get();
+
+        return $query->result();
+    }
+
+    public function get_symptom_list() {
+        $query = $this->db->get("symptom");
+
+        return $query->result();
+    }
+
+    public function get_sp_act_list() {
+        $query = $this->db->get("sp_act");
+
+        return $query->result();
+    }
+
+    public function patient_save_data($array) {
+
+        $query = $this->db->insert("person_info", $array);
+
+        if ($query) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+        return 1;
+    }
+
+    public function patient_update_data($array, $person_id) {
+        $where = array(
+            "person_id" => $person_id
+        );
+        $this->db->set($array);
+        $this->db->where($where);
+        $this->db->update("person_info");
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+    
+    public function get_sp_info_by_id($id){
+        
+        $where = array(
+          "person_id" => $id  
+        );
+        $this->db->where($where);
+        $this->db->join('sp_act', 'sp_info.sp_act_id = sp_act.sp_act_id');
+        $this->db->join('symptom', 'sp_info.symp_id = symptom.symp_id');
+        $query = $this->db->from("sp_info")->get();
+        if($query->num_rows()>0){
+            return $query->result();
+        }else{
+            return array("error"=>"0");
+        }
+    }
+
+    public function get_total_sp() {
+        $query = $this->db->select("COUNT(*) as num")->get("person_info");
+        $result = $query->row();
+        if (isset($result))
+            return $result->num;
+        return 0;
+    }
+    
+    public function get_total_sp_info($id) {
+        $this->db->where("person_id",$id);
+        $query = $this->db->select("COUNT(*) as num")->get("sp_info");
+        $result = $query->row();
+        if (isset($result))
+            return $result->num;
+        return 0;
+    }
+    
+    public function insert_sp_info($array){
+        
+        $this->db->insert("sp_info",$array);
+        
+        $result = array(
+            "success" => true
+        );
+        
+        return $result;
+        
     }
 
 }

@@ -1,16 +1,203 @@
 var check_sub = 0;
 
 $(document).ready(function () {
+    $('.modal-switch-btn').click(function () {
+        var prevPopup = $(this).attr("data-previouspopup-toggle");
+        $(prevPopup).modal('show');
+    });
+    get_form_option();
+    //$('#example').DataTable();
+    var myTable = $('#search_table').DataTable({
+        "pageLength": 5,
+        "ajax": {
+            url: "http://localhost/st_patient/Restserver/api/Patient/sp_data_table",
+            type: 'POST',
+            "dataSrc": function (json) {
+                //Make your callback here.
+                dataReport = json.data;
+                console.log(dataReport);
+                return json.data;
+            }
+        }
+    });
 
-    //alert(api_url);
+//    $('#search_table').on('click', 'tbody tr', function () {
+//        myTable.row(this).edit();
+//    });
+    // GET PREFIX LIST 
+
+    $.ajax({
+        url: api_url + "prefix_list",
+        type: "get",
+        success: function (data) {
+
+            $.each(data, function (idx, obj) {
+                $('#prefix').append('<option value="' + obj.id + '" >' + obj.prefix + '</option>');
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "person_status_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+
+            $.each(data, function (idx, obj) {
+                $('#status').append('<option value="' + obj.id + '" >' + obj.status + '</option>');
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "edu_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+
+            $.each(data, function (idx, obj) {
+                $('#edu').append('<option value="' + obj.id + '" >' + obj.edu_name + '</option>');
+                if (obj.id === 5) {
+                    $('#edu_sec').append('ตั้งแต่ ');
+                }
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "time_sp_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+
+            $.each(data, function (idx, obj) {
+                $('#time_sp').append('<option value="' + obj.time_code + '" >' + obj.time_name + '</option>');
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "sp_act_list",
+        type: "get",
+        success: function (data) {
+            $.each(data, function (idx, obj) {
+                $('#sp_act').append('<option value="' + obj.sp_act_id + '" >' + obj.sp_act_name + '</option>');
+            });
+        }
+    });
+
+    $.ajax({
+        url: api_url + "symptom_list",
+        type: "GET",
+        success: function (data) {
+
+            $.each(data, function (idx, obj) {
+
+                $("#symptom").append('<option value="' + obj.symp_id + '" >' + obj.symp_name + '</option>');
+            });
+
+        }
+
+    });
 
 
-//    $("input[name='gender']").click(function () {
-//        $("#gender_error").html("");
+// SP LIST >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//    $.ajax({
+//        url: api_url + "sp_list",
+//        type: "get",
+//        success: function (data) {
+//            console.log(data);
+//
+//            var str = "";
+//
+//            $.each(data, function (idx, obj) {
+//                if (obj.gender === "male") {
+//                    var gender = "ชาย";
+//                } else {
+//                    var gender = "หญิง";
+//                }
+//                str += "<tr>";
+//                str += "<td>";
+//                str += obj.rec_day;
+//                str += "</td>";
+//                str += "<td>";
+//                str += obj.prefix + " " + obj.fname + " " + obj.lname;
+//                str += "</td>";
+//                str += "<td>";
+//                str += gender;
+//                str += "</td>";
+//                str += "<td>";
+//                str += obj.fname;
+//                str += "</td>";
+//                str += "<td>";
+//                str += obj.fname;
+//                str += "</td>";
+//                str += "<td>";
+//                str += ` <button type="button" style="height: 30px;padding: 2px 5px;" class="btn btn-success" ` +
+//                        `onclick="edit_person_info('` + obj.person_id + `')" >
+//                                                แก้ไข
+//                                            </button>`;
+//                str += "</td>";
+//                str += "</tr>";
+//            });
+//
+//            $("#search_data").html(str);
+//            
+//        },
+//        error: function (xhr, status, error) {
+//            console.log(xhr + " " + status + " " + " " + error);
+//        }
 //    });
 
-    $("input[name='status']").click(function () {
-        $("#status_error").html("");
+//     $.ajax({
+//        url: api_url + "act_list",
+//        type: "get",
+//        success: function (data) {
+//            console.log(data);
+//
+//            $.each(data, function (idx, obj) {
+//                $('#time_sp').append('<option value="' + obj.time_code + '" >' + obj.time_name + '</option>');
+//            });
+//
+//        },
+//        error: function (xhr, status, error) {
+//            console.log(xhr + " " + status + " " + " " + error);
+//        }
+//    });
+
+
+
+
+//    $('#edu option').each(function () {
+//        if ($(this).is(':selected')) {
+//            if (this.value == "5") {
+//                $("#edu_ex").css("display", "block");
+//            }
+//        }
+//    });
+
+    $('#edu').change(function () {
+        if ($(this).val() == '5') { // or this.value == 'volvo'
+            $("#edu_ex").css("display", "inline");
+        } else {
+            $("#edu_ex").css("display", "none");
+        }
     });
 
     $("input[name='prefix']").click(function () {
@@ -24,14 +211,14 @@ $(document).ready(function () {
         }
     });
 
-    // var input_vali = '#name, #lastname,#weight,#height,#id_card,#birthday,#rec_day,#scar';
+    $('form#patient_edit :input').keydown(function (e) {
+        if (e.which === 13) {
+            var index = $('input').index(this) + 1;
+            $('input').eq(index).focus();
+        }
+    });
 
-//    $(input_vali).focusout(function () {
-//        if (this.value !== null) {
-//            var id = this.id;
-//            $('#' + id).css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//        }
-//    });
+
 
     $("input").focusout(function () {
 
@@ -64,7 +251,7 @@ $(document).ready(function () {
         $('#birthday').css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
     });
 
-    
+
 
     $("#choice_1").click(function () {
         $("#choice_1").removeClass("disable_choice");
@@ -105,7 +292,6 @@ $(document).ready(function () {
         $("#choice_2").addClass("disable_choice");
         $("#choice2").css({"display": "none", "background-color": "white"});
 
-
         $("#choice_3").removeClass("disable_choice");
         $("#choice_3").addClass("enable_choice");
         $("#choice3").css("display", "block");
@@ -120,212 +306,70 @@ $(document).ready(function () {
 
 
     });
-//    $('input[name="exp"]').click(function () {
-//        var value = $('input[name=exp]:checked').val();
-//        if (value === "1") {
-//
-//            document.getElementById("exp_1").disabled = false;
-//            document.getElementById("exp_2").disabled = false;
-//            document.getElementById("exp_3").disabled = false;
-//            document.getElementById("exp_4").disabled = false;
-//
-////            document.getElementById("exp_1_detail").disabled = false;
-////            document.getElementById("exp_2_detail").disabled = false;
-////            document.getElementById("exp_3_detail").disabled = false;
-////            document.getElementById("exp_4_detail").disabled = false;
-//        } else {
-//            document.getElementById("exp_1").disabled = true;
-//            document.getElementById("exp_2").disabled = true;
-//            document.getElementById("exp_3").disabled = true;
-//            document.getElementById("exp_4").disabled = true;
-//
-//            document.getElementById("exp_1_detail").disabled = true;
-//            document.getElementById("exp_2_detail").disabled = true;
-//            document.getElementById("exp_3_detail").disabled = true;
-//            document.getElementById("exp_4_detail").disabled = true;
+
+//    $("#search_option").change(function () {
+//        if (this.value === "1") {
+//            $("#search_1").css({"display": "block"});
+//            $("#search_2").css({"display": "none"});
+//            $("#search_3").css({"display": "none"});
+//        } else if (this.value === "2") {
+//            $("#search_1").css({"display": "none"});
+//            $("#search_2").css({"display": "block"});
+//            $("#search_3").css({"display": "none"});
+//        } else if (this.value === "3") {
+//            $("#search_1").css({"display": "none"});
+//            $("#search_2").css({"display": "none"});
+//            $("#search_3").css({"display": "block"});
 //        }
 //    });
-//
-//    $('input[name="news_other"]').click(function () {
-//        var value = $('input[name=news_other]:checked').val();
-//        if (value === "5") {
-//
-//            document.getElementById("other_detail").disabled = false;
-//        } else {
-//            document.getElementById("other_detail").disabled = true;
-//
-//        }
-//    });
-//
-//    $('#exp_1,#exp_2,#exp_3,#exp_4').click(function () {
-//
-//        var id_exp = this.id + "_detail";
-//        //alert($(id_exp).is(':disabled'));
-//        if ($("#" + id_exp).is(':disabled')) {
-//            document.getElementById(id_exp).disabled = false;
-//
-//        } else {
-//            document.getElementById(id_exp).disabled = true;
-//            $("#" + id_exp).attr("placeholder", "");
-//            $("#" + id_exp).css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//        }
-//
-//    });
-    $("#search_option").change(function () {
-        if (this.value === "1") {
-            $("#search_1").css({"display": "block"});
-            $("#search_2").css({"display": "none"});
-            $("#search_3").css({"display": "none"});
-        } else if (this.value === "2") {
-            $("#search_1").css({"display": "none"});
-            $("#search_2").css({"display": "block"});
-            $("#search_3").css({"display": "none"});
-        } else if (this.value === "3") {
-            $("#search_1").css({"display": "none"});
-            $("#search_2").css({"display": "none"});
-            $("#search_3").css({"display": "block"});
-        }
+
+    $('#edit_modal').on('hidden.bs.modal', function () {
+        $("#patient_edit")[0].reset();
     });
+
 });
 
 function submit() {
 
-//    if ($("#rec_day").val() === "") {
-//        $("#rec_day").attr("placeholder", "กรอกวันที่");
-//        $("#rec_day").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//        //$("#_error").html("กรอกวันที่");
-//    } else {
-//        //$("#_error").html("");
-//        $("#rec_day").attr("placeholder", "");
-//        $("#rec_day").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
-//
-//
-//
-//    if ($("#name").val() === "") {
-//        //$("#name_error").html("กรอกชื่อ");
-//        $("#name").attr("placeholder", "กรอกชื่อ");
-//        $("#name").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//    } else {
-//        //$("#name_error").html("");
-//        $("#name").attr("placeholder", "");
-//        $("#name").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
-//
-//    if ($("#lastname").val() === "") {
-//        // $("#lastname_error").html("กรอกนามสกุล");
-//        $("#lastname").attr("placeholder", "กรอกนามสกุล");
-//        $("#lastname").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//
-//    } else {
-//        //$("#lastname_error").html("");
-//        $("#lastname").attr("placeholder", "");
-//        $("#lastname").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
-//
-//    if ($("#birthday").val() === "") {
-//        //$("#birthday_error").html("กรอกวันที่");
-//        $("#birthday").attr("placeholder", "กรอกวันที่");
-//        $("#birthday").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//    } else {
-//        // $("#birthday_error").html("");
-//        $("#birthday").attr("placeholder", "");
-//        $("#birthday").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
-//
-//    if ($("#id_card").val() === "") {
-//        // $("#id_card_error").html("กรอกเลขบัตรประชาชน");
-//        $("#id_card").attr("placeholder", "กรอกเลขบัตรประชาชน");
-//        $("#id_card").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//    } else if ($("#id_card").val().length !== 13) {
-//        $("#id_card_error").html("กรอกเลขบัตรประชาชน13หลัก");
-//
-//        $("#id_card").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//    } else {
-//        $("#id_card_error").html("");
-//        $("#id_card").attr("placeholder", "");
-//        $("#id_card").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
-//
-//
-//    if ($("#weight").val() === "") {
-//        //$("#w_error").html("กรอกน้ำหนัก");
-//        $("#weight").attr("placeholder", "กรอกน้ำหนัก");
-//        $("#weight").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//    } else {
-//        //$("#w_error").html("");
-//        $("#weight").attr("placeholder", "");
-//        $("#weight").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
-//    if ($("#height").val() === "") {
-//        // $("#h_error").html("กรอกส่วนสูง");
-//        $("#height").attr("placeholder", "กรอกส่วนสูง");
-//        $("#height").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//    } else {
-//        // $("#h_error").html("");
-//        $("#height").attr("placeholder", "");
-//        $("#height").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
-//
-//    if ($("#scar").val() === "") {
-//        // $("#h_error").html("กรอกส่วนสูง");
-//        $("#scar").attr("placeholder", "กรอกข้อมูล");
-//        $("#scar").css({"box-shadow": "0px 0px 10px red", "border-color": "red"});
-//    } else {
-//        // $("#h_error").html("");
-//        $("#scar").attr("placeholder", "");
-//        $("#scar").css({"box-shadow": "0px 0px 0px black", "border-color": "black"});
-//    }
 
 
-    // VALIDATE START
-//    if (!$("input[name='gender']").is(':checked')) {
-//        $("#gender_error").html("กรุณาเลือกเพศ");
+//    if (!$("#patient_save input[name='prefix']").is(':checked')) {
+//        $("#patient_save input#prefix_error").html("กรุณาเลือกคำนำหน้านาม");
 //    } else {
-//        $("#gender_error").html("");
+//        $("#patient_save input#prefix_error").html("");
+//    }
+//
+//
+//    if (!$("#patient_save input[name='time_sp']").is(':checked')) {
+//        $("#patient_save input#come_error").html("กรุณาเลือกข้อมูล");
+//    } else {
+//        $("#patient_save input#come_error").html("");
 //    }
 
-    if (!$("input[name='prefix']").is(':checked')) {
-        $("#prefix_error").html("กรุณาเลือกคำนำหน้านาม");
+    if (!$("#patient_save input[name='exp']").is(':checked')) {
+        $("#patient_save input#exp_error").html("กรุณาเลือกข้อมูล");
     } else {
-        $("#prefix_error").html("");
-    }
-
-    if (!$("input[name='status']").is(':checked')) {
-        $("#status_error").html("กรุณาเลือกสถานภาพ");
-    } else {
-        $("#status_error").html("");
-    }
-
-    if (!$("input[name='time_to_come']").is(':checked')) {
-        $("#come_error").html("กรุณาเลือกข้อมูล");
-    } else {
-        $("#come_error").html("");
-    }
-
-    if (!$("input[name='exp']").is(':checked')) {
-        $("#exp_error").html("กรุณาเลือกข้อมูล");
-    } else {
-        var value = $('input[name=exp]:checked').val();
-        if (value === "1" && !$("input[name='exp_1']").is(':checked') && !$("input[name='exp_2']").is(':checked') && !$("input[name='exp_3']").is(':checked') && !$("input[name='exp_4']").is(':checked')) {
-            $("#exp_error").html("กรุณาเลือกข้อมูล");
+        var value = $('#patient_save input[name=exp]:checked').val();
+        if (value === "1" && !$("#patient_save input[name='exp_1']").is(':checked') && !$("#patient_save input[name='exp_2']").is(':checked') && !$("#patient_save input[name='exp_3']").is(':checked') && !$("#patient_save input[name='exp_4']").is(':checked')) {
+            $("#patient_save input#exp_error").html("กรุณาเลือกข้อมูล");
         } else {
-            $("#exp_error").html("");
+            $("#patient_save input#exp_error").html("");
         }
 
     }
 
-    if (!$("input[name='exp']").is(':checked')) {
-        $("#exp_error").html("กรุณาเลือกข้อมูล");
+    if (!$("#patient_save input[name='exp']").is(':checked')) {
+        $("#patient_save input#exp_error").html("กรุณาเลือกข้อมูล");
     } else {
-        $("#exp_error").html("");
+        $("#patient_save input#exp_error").html("");
     }
 //    var i =0;
     $('form#patient_save :input').each(
             function (i, el) {
                 var id_input = el.id;
 
-                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" ) {
+                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" && id_input !== "road" && id_input !== "fax" && id_input !== "scar"
+                        && id_input !== "line_id" && id_input !== "email") {
 //                    i++;
 //                    console.log(i);
                     if ((!el.value || el.value === '')) {
@@ -369,28 +413,45 @@ function submit() {
     // var check = true;
     //console.log(check);
     if (check === false) {
-        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+        $.confirm({
+
+            title: 'แจ้งเตือน',
+            content: 'กรุณากรอกข้อมูลให้ครบถ้วน !',
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                ok: {
+                    btnClass: 'btn-red',
+
+                }
+
+            }
+        });
+
+
     } else {
 
         save_data();
 
     }
+    //save_data();
 
 
 }
 
 function check_submit(check_news) {
     console.log(check_news);
-    console.log($("#patient_save").serialize());
+    //console.log($("#patient_save").serialize());
     var suc = "1";
     $('form#patient_save :input').each(
             function (i, el) {
                 var id_input = el.id;
 
-                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" ) {
+                if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" && id_input !== "road" && id_input !== "fax" && id_input !== "scar"
+                        && id_input !== "line_id" && id_input !== "email") {
                     if ((!el.value || el.value === '')) {
                         suc = "0";
-                        console.log(el.id);
+                        // console.log(el.id);
                     } else {
                         // do nothing
                     }
@@ -431,7 +492,26 @@ function checkbox_check() {
 }
 
 function search_submit() {
+    $("#search_table").css("display", "none");
+    var table = $("#search_table").DataTable();
+    table.clear();
+    table.destroy();
 
+    $('#search_table').DataTable({
+        "pageLength": 5,
+        "ajax": {
+            url: "http://localhost/st_patient/Restserver/api/Patient/sp_data_table",
+            type: 'POST',
+            data: $("#search_form").serialize(),
+            "dataSrc": function (json) {
+                //Make your callback here.
+                dataReport = json.data;
+                console.log(dataReport);
+                return json.data;
+            }
+        }
+    });
+    $("#search_table").css("display", "block");
 
 
 }
@@ -455,20 +535,39 @@ function test_t() {
 }
 
 function save_data() {
-//    $.ajax({
-//        url: client_url + "guzzle",
-//        type: "POST",
-//        dataType: "JSON",
-//        data: $("#test").serialize(),
-//        success: function (data) {
-//            console.log(data);
-//        }, error: function (jqXHR, textStatus, errorThrown) {
-//            console.log(jqXHR + " " + textStatus + " " + errorThrown);
-//        }
-//    });
-    console.log($("#patient_save").serialize());
+    //var formData = new FormData($("#patient_save")[0]);
 
-    alert("success");
+
+
+    $.ajax({
+        url: api_url + "sp_save",
+        type: "POST",
+        dataType: "JSON",
+        data: $("#patient_save").serialize(),
+        success: function (data) {
+            $.confirm({
+
+                title: 'แจ้งเตือน',
+                content: 'กรุณากรอกข้อมูลให้ครบถ้วน !',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    ok: {
+                        btnClass: 'btn-green',
+
+                    }
+
+                }
+            });
+            console.log(data);
+
+        }, error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR + " " + textStatus + " " + errorThrown);
+        }
+    });
+    //console.log($("#patient_save").serialize());
+
+
 }
 
 function view_user(id) {
@@ -495,7 +594,7 @@ function Numbers(e) {
     return numcheck.test(keychar);
 }
 
-function keyup(obj, e) {
+function keyup(obj, e, type) {
     var keynum;
     var keychar;
     var id = '';
@@ -505,12 +604,18 @@ function keyup(obj, e) {
         keynum = e.which;
     }
     keychar = String.fromCharCode(keynum);
+    if (type === "save") {
+        var tagInput = $("#patient_save input");
+    } else if (type === "update") {
+        var tagInput = $("#patient_edit input");
+    }
 
-    var tagInput = document.getElementsByTagName('input');
     for (i = 0; i <= tagInput.length; i++) {
+        console.log(tagInput[i] + ':::' + obj);
         if (tagInput[i] == obj) {
             var prevObj = tagInput[i - 1];
             var nextObj = tagInput[i + 1];
+            //console.log(prevObj.id+"/"+nextObj.id);
             break;
         }
     }
@@ -525,15 +630,21 @@ function keyup(obj, e) {
                     if (tagInput[i].id == 'txtID13')
                         break;
                 } else {
+
                     tagInput[i].focus();
                     return;
                 }
             }
         }
-        if (checkID(id))
+        if (checkID(id)) {
+            console.log(nextObj.id);
             nextObj.focus();
-        else
+
+        } else {
             alert('รหัสประชาชนไม่ถูกต้อง');
+        }
+
+
         nextObj.focus();
     }
 
@@ -554,6 +665,221 @@ function checkID(id) {
 //
 //    }
     return true;
+}
+
+function edit_person_info(id) {
+    //$("#patient_edit")[0].reset();
+
+    $("#patient_edit input#rec_day").datepicker("setDate", new Date());
+
+    $("#patient_edit input#birthday").datepicker("setDate", new Date());
+
+
+
+
+    $("#edit_modal").modal('show');
+
+    $.ajax({
+        url: api_url + "get_sp_by_id",
+        type: "POST",
+        data: {
+            id: id
+        },
+        success: function (data) {
+            console.log(data[0]);
+            var array = data[0];
+
+            var inpt_arr = ['exp', 'child'];
+            $.each(array, function (idx, obj) {
+//                console.log(idx + " " + obj);
+                if (idx === "exp" || idx === "child") {
+                    switch (idx) {
+                        case "child":
+                            if (obj === "1") {
+                                $("#patient_edit input[name=child]").prop('checked', true);
+                            }
+                            break;
+                        case "exp":
+                            if (obj === "1") {
+                                $("#exp01").prop('checked', true);
+                            } else {
+                                $("#exp02").prop('checked', true);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+
+
+                    if (idx === "exp_1" || idx === "exp_2" || idx === "exp_3" || idx === "exp_4") {
+                        $("#patient_edit input[name=" + idx + "_detail]").val(obj);
+                        if (obj !== null && obj !== "" && obj !== "-") {
+                            $("#patient_edit input[name=" + idx + "]").prop('checked', true);
+                        }
+                        //console.log("detail " + idx + "/ " + obj);
+                    } else if (idx === "id_card") {
+                        var j = 0;
+                        for (i = 0; i < 13; i++) {
+                            j = i + 1;
+
+                            var val = obj.slice(i, j);
+                            $("#patient_edit input[name=txtID" + j + "]").val(val);
+                        }
+                    } else if (idx === "reason" || idx === "admission") {
+                        if (idx === "reason") {
+                            $("#patient_edit textarea[name=reason]").val(obj);
+                        } else {
+                            $("#patient_edit textarea[name=admission]").val(obj);
+                        }
+                    } else if (idx === "prefix" || idx === "edu" || idx === "status" || idx === "time_sp") {
+
+                        $('#' + idx + '_s option[value="' + obj + '"]').attr("selected", true);
+                    } else if (idx === "rec_day" || idx === "birthday") {
+                        var date = convert_date_ad(obj);
+                        $("#patient_edit input[name=" + idx + "]").val(date);
+
+
+                    } else {
+                        $("#patient_edit input[name=" + idx + "]").val(obj);
+                    }
+                }
+
+
+
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+}
+
+
+function update_sp() {
+//console.log($("#patient_edit").serialize());
+
+    $.ajax({
+        url: api_url + "sp_save",
+        type: "post",
+        data: $("#patient_edit").serialize(),
+        success: function (data) {
+            $("#edit_modal").modal("hide");
+            $.alert({
+                title: 'แจ้งเตือน',
+                content: 'แก้ไขข้อมูลสำเร็จ',
+            });
+
+        }
+    });
+
+}
+
+function close_modal() {
+    $("#patient_edit")[0].reset();
+}
+
+function get_form_option() {
+
+    $.ajax({
+        url: api_url + "prefix_list",
+        type: "get",
+        success: function (data) {
+            var str = "";
+            $.each(data, function (idx, obj) {
+
+                str += '<option value="' + obj.id + '" >' + obj.prefix + '</option>';
+            });
+            $('#patient_edit #prefix_s').html(str);
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "person_status_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+
+            $.each(data, function (idx, obj) {
+                $('#patient_edit #status_s').append('<option value="' + obj.id + '" >' + obj.status + '</option>');
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "edu_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+
+            $.each(data, function (idx, obj) {
+                $('#patient_edit #edu_s').append('<option value="' + obj.id + '" >' + obj.edu_name + '</option>');
+                if (obj.id === 5) {
+                    $('#patient_edit #edu_sec_s').append('ตั้งแต่ ');
+                }
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+
+    $.ajax({
+        url: api_url + "time_sp_list",
+        type: "get",
+        success: function (data) {
+            console.log(data);
+
+            $.each(data, function (idx, obj) {
+                $('#patient_edit #time_sp_s').append('<option value="' + obj.time_code + '" >' + obj.time_name + '</option>');
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr + " " + status + " " + " " + error);
+        }
+    });
+}
+
+function convert_date_ad(date) {
+    var array = date.split("-");
+    var day = array[2];
+    var month = array[1];
+    var year = parseInt(array[0]) + 543;
+
+    return day + "/" + month + "/" + year;
+}
+
+function manage_sp_act(id) {
+//    $("#edit_modal").modal("hide");
+//    $("#sp_modal").modal("show");
+
+    window.open(client_url + "sp/get_sp_info/" + id, 'window name', "width=800,height=600,left=100,top=100,resizable=yes,scrollbars=yes");
+}
+
+function back_to_edit() {
+
+    $("#edit_modal").modal("show");
+}
+
+function more_opt() {
+    if ($('#more_sec').css('display') == 'none') {
+        $("#more_sec").css('display', 'block');
+        $("#more_opt").html("ซ่อนตัวเลือกการค้นหา");
+    } else {
+        $("#more_sec").css('display', 'none');
+        $("#more_opt").html("ตัวเลือกการค้นหาเพิ่มเติม");
+    }
 }
 
 

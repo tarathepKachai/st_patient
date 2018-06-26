@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                    ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                         ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                    ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                         ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                    ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                         ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -46,6 +46,7 @@
                     <!--Save Patient Data-->
                     <div style="display: block;"  id="choice1" class="scrollable">
                         <form name="patient_save" id="patient_save"  action="#" method="POST">
+                            <input type="hidden" name="form_type" id="form_type" value="insert"  >
                             <!--FORM -------------------------------------------------------->
                             <div class="col-md-12">
 
@@ -55,15 +56,20 @@
 
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <fieldset>
                                             <div class="row">
-                                                <div class="col-md-5" style="width:350px"><label class="label_1" >คำนำหน้านาม </label></div>
-                                                <div class="col-md-7"> <label><input  type="radio" class="radio_but" name="prefix" value="1" > ด.ญ. &nbsp; </label>
+                                                <div class="col-md-7" style="width:350px"><label class="label_1" >คำนำหน้านาม </label></div>
+                                                <div class="col-md-5"> <label>
+                                                        <select name="prefix" id="prefix" class="input-border">
+
+                                                        </select>
+<!--                                                        <input  type="radio" class="radio_but" name="prefix" value="1" > ด.ญ. &nbsp; </label>
                                                     <label><input type="radio" class="radio_but" name="prefix" value="2" > ด.ช. &nbsp; </label>
                                                     <label><input type="radio" class="radio_but" name="prefix" value="3" > นาย &nbsp; </label>
                                                     <label><input type="radio" class="radio_but" name="prefix" value="4" > นาง &nbsp; </label>
-                                                    <label><input type="radio" class="radio_but" name="prefix" value="5" > นางสาว &nbsp; </label></div>
+                                                    <label><input type="radio" class="radio_but" name="prefix" value="5" > นางสาว &nbsp; </label>-->
+                                                </div>
                                             </div>
 
                                         </fieldset>
@@ -73,10 +79,10 @@
 
                                             <div class="row">
                                                 <div class="col-md-2" style="text-align:right">
-                                                    <label>ชื่อ</label>
+                                                    <label class="label_1">ชื่อ</label>
                                                 </div>
                                                 <div class="col-md-10" >
-                                                    <input id="name"  name="name" type="text" class="name_medium" style="width:100%" >
+                                                    <input id="fname"  name="fname" type="text" class="name_medium" style="width:100%" >
                                                 </div>
                                             </div>
 
@@ -85,11 +91,11 @@
                                     <div class="col-md-4" >
                                         <fieldset >
                                             <div class="row">
-                                                <div class="col-md-2">
-                                                    <label>นามสกุล</label>
+                                                <div class="col-md-3">
+                                                    <label class="label_1">นามสกุล</label>
                                                 </div>
-                                                <div class="col-md-10">
-                                                    <input type="text"  id="lastname" name="lastname" class="name_medium" style="width:100%" >
+                                                <div class="col-md-9">
+                                                    <input type="text"  id="lname" name="lname" class="name_medium" style="width:100%" >
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -123,34 +129,39 @@
                                 <span class="error_report" id="birthday_error" ></span> &nbsp;
                                 <label class="label_1">เลขที่บัตรประชาชน </label>
 
-                                <input type="text" name="txtID1" id="txtID1" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)"  /> - 
-                                <input type="text" name="txtID2" id="txtID2" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" />  
-                                <input type="text" name="txtID3" id="txtID3" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" /> 
-                                <input type="text" name="txtID4" id="txtID4" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" />  
-                                <input type="text" name="txtID5" id="txtID5" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" /> -
-                                <input type="text" name="txtID6" id="txtID6" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" />  
-                                <input type="text" name="txtID7" id="txtID7" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" />  
-                                <input type="text" name="txtID8" id="txtID8" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" /> 
-                                <input type="text" name="txtID9" id="txtID9" class="input-card"  maxlength=1  onkeyup="keyup(this, event)" onkeypress="return Numbers(event)"/>  
-                                <input type="text" name="txtID10" id="txtID10" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" /> -
-                                <input type="text" name="txtID11" id="txtID11" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" />  
-                                <input type="text" name="txtID12" id="txtID12" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" /> -
-                                <input type="text" name="txtID13" id="txtID13" class="input-card"  maxlength=1 onkeyup="keyup(this, event)" onkeypress="return Numbers(event)" /> 
+                                <input type="text" name="txtID1" id="txtID1" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)"  /> - 
+                                <input type="text" name="txtID2" id="txtID2" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" />  
+                                <input type="text" name="txtID3" id="txtID3" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> 
+                                <input type="text" name="txtID4" id="txtID4" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" />  
+                                <input type="text" name="txtID5" id="txtID5" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> -
+                                <input type="text" name="txtID6" id="txtID6" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" />  
+                                <input type="text" name="txtID7" id="txtID7" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" />  
+                                <input type="text" name="txtID8" id="txtID8" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> 
+                                <input type="text" name="txtID9" id="txtID9" class="input-card"  maxlength=1  onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)"/>  
+                                <input type="text" name="txtID10" id="txtID10" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> -
+                                <input type="text" name="txtID11" id="txtID11" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" />  
+                                <input type="text" name="txtID12" id="txtID12" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> -
+                                <input type="text" name="txtID13" id="txtID13" class="input-card"  maxlength=1 onkeyup="keyup(this, event, 'save')" onkeypress="return Numbers(event)" /> 
 
                             </div>
                             <div class="col">
-                                <label style="margin-top:10px" class="label_1" >น้ำหนัก </label>  
+                                <label style="margin-top:10px" class="label_1" >น้ำหนัก(กก.) </label>  
                                 <input type="text" class="text_short" name="weight" id="weight">
                                 <span class="error_report" id="w_error" ></span> 
-                                &nbsp; <label class="label_1" >ส่วนสูง </label>  
+                                &nbsp; <label class="label_1" >ส่วนสูง(ซม.) </label>  
                                 <input type="text" class="text_short" name="height" id="height"> 
                                 <span class="error_report" id="h_error" ></span> 
 
                                 <label class="label_1">สถานภาพ</label> 
-                                &nbsp;<label><input type="checkbox" class="radio_but" name="status1" id="status1" value="1" > โสด &nbsp; </label>
+
+                                <select name="status" id="status" class="input-border">
+
+                                </select>
+<!--                                &nbsp;<label><input type="checkbox" class="radio_but" name="status1" id="status1" value="1" > โสด &nbsp; </label>
                                 &nbsp;<label><input type="checkbox" class="radio_but" name="status2" id="status2" value="2" > สมรส &nbsp; </label>
-                                &nbsp;<label><input type="checkbox" class="radio_but" name="status3" id="status3" value="3" > หย่าร้าง &nbsp; </label>
-                                &nbsp;<label><input type="checkbox" class="radio_but" name="status4" id="status4" value="4" > มีบุตร &nbsp; </label>
+                                &nbsp;<label><input type="checkbox" class="radio_but" name="status3" id="status3" value="3" > หย่าร้าง &nbsp; </label>-->
+
+                                &nbsp;<label><input type="checkbox" class="radio_but" name="child" id="child" value="1" > มีบุตร &nbsp; </label>
                                 <span class="error_report" id="status_error" ></span>
                             </div>
                             <div class="col">
@@ -162,7 +173,7 @@
                             <div class="col">
                                 <label class="label_1" >อาชีพ</label> <input type="text" style="width:30%" name="job" id="job" class="name_medium" > 
                                 &nbsp;<label class="label_1" >ที่ทำงาน</label> <input type="text" style="width:30%" name="workplace" id="workplace" class="name_medium" >  
-                                &nbsp;<label class="label_1" >โทรศัพท์</label> <input type="text"  name="work_tel" id="tel_work" class="tel_work" >  
+                                &nbsp;<label class="label_1" >โทรศัพท์</label> <input type="text"  name="tel_work" id="tel_work" class="name_medium" >  
 
                             </div>
 
@@ -170,26 +181,26 @@
                             <div class="col">
                                 <label class="label_1">ที่อยู่ปัจจุบัน</label><br>
                                 <label  style="margin-left:13px;">บ้านเลขที่</label> 
-                                <input type="text" style="width:10%;margin-left:11px" class="text_short" name="h_no" id="h_no"> 
-                                หมู่ <input type="text" style="width:10%" class="text_short" name="muu" id="muu"> 
-                                ถนน <input type="text" style="width:20%" class="text_short" name="road_no" id="road_no">
-                                ตำบล/แขวง <input type="text" style="width:20%" class="text_short" name="tumbon" id="tumbon"><br>
+                                <input type="text" style="width:10%;margin-left:11px" class="text_short" name="address" id="address"> 
+                                หมู่ <input type="text" style="width:10%" class="text_short" name="mu" id="mu"> 
+                                ถนน <input type="text" style="width:20%" class="text_short" name="road" id="road">
+                                ตำบล/แขวง <input type="text" style="width:20%" class="text_short" name="tambol" id="tambol"><br>
 
                             </div>
                             <div class="col" style="margin-top:10px">
                                 <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm">อำเภอ</label>
                                 <input type="text" class="text_short" name="amphur" id="amphur"> 
                                 จังหวัด <input type="text" class="text_short" name="province" id="province">
-                                โทรศัพท์ที่สามารถติดต่อได้ <input type="text" class="name_medium" name="tel" id="tel">
+                                โทรศัพท์ที่สามารถติดต่อได้ <input type="text" maxlength="10" class="name_medium" name="tel" id="tel">
                             </div>
                             <div class="col" style="margin-top:10px">
                                 <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm">โทรสาร</label>
                                 <input style="margin-top: 7px" type="text" class="name_medium" name="fax" id="fax"> 
-                                Line ID <input type="text" class="name_medium" name="line" id="line">
+                                Line ID <input type="text" class="name_medium" name="line_id" id="line_id">
                                 E-mail <input type="email" class="name_medium" name="email" id="email">
                             </div>
                             <div class="col" style="margin-top:10px">
-                                <label for="colFormLabelSm" class="col-sm-1 col-form-label col-form-label-sm">บุคคลที่สามารถติดต่อได้ในกรณีฉุกเฉิน</label>
+                                <label for="colFormLabelSm" class="label_1">บุคคลที่สามารถติดต่อได้ในกรณีฉุกเฉิน</label>
                                 <input style="margin-top: 7px" type="text" class="name_medium" name="person_em" id="person_em"> 
                                 <label class="label_1" >โทรศัพท์</label>
                                 <input style="margin-top: 7px" type="text" class="name_medium" name="tel_em" id="tel_em"> 
@@ -200,35 +211,39 @@
                                     <div class="col-md-2">
                                         <label class="label_1" >วุฒิการศึการสูงสุด</label> 
                                     </div>
-                                    <div class="col-md-10">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" >
-                                                <input class="form-check-input" type="radio" name="degree" value="1">
-                                                ประถมศึกษา</label>
-                                        </div> 
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" >
-                                                <input class="form-check-input" type="radio" name="degree" value="2">
-                                                มัธยมศึกษาตอนต้น</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" >
-                                                <input class="form-check-input" type="radio" name="degree" value="3">
-                                                มัธยมศึกษาตอนปลาย/เทียบเท่า</label>
-                                        </div>
+                                    <div class="col-md-10" id="edu_sec">
+                                        <select name="edu" id="edu" class="input-border" >
 
-                                        <div class="col"></div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" >
-                                                <input class="form-check-input" type="radio" name="degree" value="5">
-                                                อนุปริญญา/หรือเทียบเท่า</label>
-                                        </div> 
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" >
-                                                <input class="form-check-input" type="radio" name="degree" value="6">
-                                                ปริญญาตรีขึ้นไป</label> &nbsp;
-                                            <input type="text" class="name_medium" style="width:150px" name="degree_detail" id="degree_detail">
-                                        </div>
+                                        </select>
+                                        <span id="edu_ex" style="display:none"  >สาขา &nbsp;<input type="text" class="wide_box" id="edu_detail" name="edu_detail" ></span>
+                                        <!--                                        <div class="form-check form-check-inline">
+                                                                                    <label class="form-check-label" >
+                                                                                        <input class="form-check-input" type="radio" name="degree" value="1">
+                                                                                        ประถมศึกษา</label>
+                                                                                </div> 
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <label class="form-check-label" >
+                                                                                        <input class="form-check-input" type="radio" name="degree" value="2">
+                                                                                        มัธยมศึกษาตอนต้น</label>
+                                                                                </div>
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <label class="form-check-label" >
+                                                                                        <input class="form-check-input" type="radio" name="degree" value="3">
+                                                                                        มัธยมศึกษาตอนปลาย/เทียบเท่า</label>
+                                                                                </div>
+                                        
+                                                                                <div class="col"></div>
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <label class="form-check-label" >
+                                                                                        <input class="form-check-input" type="radio" name="degree" value="5">
+                                                                                        อนุปริญญา/หรือเทียบเท่า</label>
+                                                                                </div> 
+                                                                                <div class="form-check form-check-inline">
+                                                                                    <label class="form-check-label" >
+                                                                                        <input class="form-check-input" type="radio" name="degree" value="6">
+                                                                                        ปริญญาตรีขึ้นไป</label> &nbsp;
+                                                                                    <input type="text" class="name_medium" style="width:150px" name="degree_detail" id="degree_detail">
+                                                                                </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -251,14 +266,14 @@
 
                             <hr>
                             <div class="col">
-                                <label class="label_1">ประวัติการเจ็บป่วย หรือ รับการผ่าตัด(ระบุ)</label>
+                                <label class="label_1">ประวัติการเจ็บป่วย หรือ รับการผ่าตัด</label>
                                 <br>
                                 <textarea name="admission" id="admission" class="form-control" style="border-color: black;"></textarea> 
                                 <br>
                             </div>
 
                             <div class="col">
-                                <label class="label_1" >โรคปรจำตัว</label> 
+                                <label class="label_1" >โรคประจำตัว</label> 
                                 &nbsp; <input type="text" class="name_medium" name="disease" id="disease" style="width: 700px;"><br>
                             </div>
                             <div class="col">
@@ -272,106 +287,145 @@
                                 <label class="label_1" >ช่วงเวลาที่สะดวกในการมาทำงานเป็นผู้ป่วยจำลอง</label>
                                 &nbsp;<span class="error_report" id="come_error" ></span>
                                 <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label><input type="radio" name="time_to_come" value="1"> ทุกครั้งเมื่อคณะแพทยศาสตร์ต้องการ </label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label><input type="radio" name="time_to_come" value="2"> บางครั้งตามแต่เวลาและโอกาสจะเอื้ออำนวย </label>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="col">
-                                                <label class="form-check-label" >
-                                                    <input class="form-check-input" type="radio" name="time_to_come_2" value="1">
-                                                    วันจันทร์ - ศุกร์ (เวลาราชการ)</label>
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-check-label" >
-                                                    <input class="form-check-input" type="radio" name="time_to_come_2" value="2">
-                                                    วันเสาร์ - อาทิตย์</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label><input type="radio" name="time_to_come" value="3"> ไม่แน่ใจยังไม่ได้ตัดสินใจ </label>
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="row">
+                                                                            <div class="col">
+                                                                                <label><input type="radio" name="time_to_come" value="1"> ทุกครั้งเมื่อคณะแพทยศาสตร์ต้องการ </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-4">
+                                                                                <label><input type="radio" name="time_to_come" value="2"> บางครั้งตามแต่เวลาและโอกาสจะเอื้ออำนวย </label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="col">
+                                                                                    <label class="form-check-label" >
+                                                                                        <input class="form-check-input" type="radio" name="time_to_come_2" value="1">
+                                                                                        วันจันทร์ - ศุกร์ (เวลาราชการ)</label>
+                                                                                </div>
+                                                                                <div class="col">
+                                                                                    <label class="form-check-label" >
+                                                                                        <input class="form-check-input" type="radio" name="time_to_come_2" value="2">
+                                                                                        วันเสาร์ - อาทิตย์</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <label><input type="radio" name="time_to_come" value="3"> ไม่แน่ใจยังไม่ได้ตัดสินใจ </label>
+                                                                            </div>
+                                                                        </div>-->
+                                    <select name="time_sp" id="time_sp" class="input-border" >
+
+                                    </select>
                                 </div>
 
 
 
                             </div>
-                            <!--FORM -------------------------------------------------------->
+                            <!-------------------    FORM -------------------------------------------------------------------------------------------------->
                         </form>
-                        <center><button onclick="submit()" class="btn btn-primary">บันทึก</button></center>
+                        <center><button style="margin-top:15px" onclick="submit()" class="btn btn-primary">บันทึก</button></center>
 
                     </div>
 
                     <!--Search Patient-->
                     <div style="display: none;" id="choice2" class="scrollable">
-                        <label class="label_1">ตัวเลือกการค้นหา</label>
-                        <select name="search_option" id="search_option"   >
+                        <!------------------------   FORM SEARCH   ------------------------------------------***************************************-->
+                        <form name="search_form" id="search_form" >
+                            <label class="label_1">ประเภทการค้นหา</label>
+                            <select name="search_option" id="search_option"   >
 
-                            <option value="1" >--อายุ , เพศ--</option>
-                            <option value="2" >--เพศ , น้ำหนัก--</option>
-                            <option value="3" >--เพศ , ประสบการณ์--</option>
-
-                        </select>
-                        &nbsp; <label class="label_1">ID</label>
-                        <input type="text" name="id_search" id="id_search" class="text_short">  ปี &nbsp;
-                        <button  onclick="search_submit()" class="button-search" >ค้นหา</button>
-                        <button type="button" style="height: 30px;padding: 2px;" class="btn btn-success" data-toggle="modal" data-target="#sp_modal">
-                            แก้ไข
-                        </button>
-                        <div id="search_1" style="padding-left: 10px" >
-                            <label class="label_1">อายุ</label>
-                            <input type="text" name="age1" id="age1" class="age_box">  ปี &nbsp; 
-                            <label class="label_1"> เพศ </label>
-                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s1" value="1" > ชาย</label>
-                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s1" value="2"> หญิง</label>
-                        </div>
-
-                        <div id="search_2" style="display:none;padding-left: 10px">
-                            <label class="label_1">เพศ</label> 
-                            &nbsp; <label><input type="radio" class="radio_but" name="gender_s2" value="1" > ชาย</label>
-                            &nbsp; <label><input type="radio" class="radio_but" name="gender_s2" value="2"> หญิง</label>
-
-                            &nbsp; <label class="label_1">น้ำหนัก</label>
-                            <input type="text" name="weight2" id="weight2" class="text_short">  กก.
-
-                        </div>
-
-                        <div id="search_3" style="display:none;padding-left: 10px"> 
-                            <label class="label_1">เพศ</label> 
-                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s3" value="1">ชาย</label>
-                            &nbsp;<label><input type="radio" class="radio_but" name="gender_s3" value="2">หญิง</label>
-                            &nbsp;<label class="label_1">ประสบการณ์</label> &nbsp;
-                            <label><input type="checkbox" class="radio_but" name="exp_s1" id="exp_s1" value="1"> ซักประวัติอาการ </label> 
-                            <input type="text" class="name_medium" style="width: 200px" name="exp_s1_d" id="exp_s1_d" > &nbsp;
-
-                            <label><input type="checkbox" class="radio_but" name="exp_s1" id="exp_s2" value="1"> ให้คำแนะนำอาการ/โรค </label> 
-                            <input type="text" class="name_medium" style="width: 200px" name="exp_s1_d" id="exp_s2_d" > &nbsp;
-                            <br>
-
-                            <label style="margin-left: 245px" ><input type="checkbox" class="radio_but" name="exp_s3" id="exp_s3" value="1">&nbspตรวจร่างกายอาการ</label>
-                            <input type="text" class="name_medium" style="width:200px" name="exp_s3_d" id="exp_s3_d" >&nbsp;
-                            <label><input type="checkbox" class="radio_but" name="exp_s4" id="exp_s4" value="1">&nbsp;การทำหัตถการ</label>
-                            &nbsp;<input type="text" class="name_medium" style="width:200px" name="exp_s4_d" id="exp_s4_d" >
+                                <option value="1" >--รายชื่อผู้ป่วยจำลอง--</option>
+                                <option value="2" >--ผลประเมิน--</option>
 
 
-                        </div>
+                            </select>
+                            &nbsp; <label class="label_1">ID SP</label>
+                            <input type="text" name="id_search" id="id_search" class="text_short">   
+                            &nbsp; <label class="label_1">ชื่อ</label>&nbsp; <input type="text" name="name_search" id="name_search" class="name_medium">   &nbsp;
+                            &nbsp; <label class="label_1">นามสกุล</label> &nbsp;<input type="text" name="lastname_search" id="lastname_search" class="name_medium">   &nbsp;
+                            <button  onclick="search_submit()" class="button-search" >ค้นหา</button>
+                            <!--                        <button type="button" style="height: 30px;padding: 2px;" class="btn btn-success" data-toggle="modal" data-target="#sp_modal">
+                                                        แก้ไข
+                                                    </button>-->
+                            <div id="search_1" class="col" style="padding-left: 10px"  >
+                                <a onclick="more_opt()" href="#" id="more_opt" style="font-size: 15px" >ตัวเลือกการค้นหาเพิ่มเติม</a> <br>
+                                <div style="margin-top:10px;display:none" id="more_sec"  >
+                                    <div class="col">
+                                        <label> เพศ </label>
+                                        <select id="gender_s" name="gender_s" class="input-border">
+                                            <option value="0" >--เลือก--</option>
+                                            <option value="male">ชาย</option>
+                                            <option value="female">หญิง</option>
+                                        </select>
+                                        &nbsp; &nbsp; อายุ (ปี)&nbsp; <input type="text" name="age_s1" id="age_s1" class="text_short" > 
+                                        ถึง <input type="text" name="age_s2" id="age_s2" class="text_short" >
+                                        &nbsp; &nbsp; น้ำหนัก (ก.ก.)&nbsp; <input type="text" name="weight_s1" id="weight_s1" class="text_short" > 
+                                        ถึง <input type="text" name="weight_s2" id="weight_s2" class="text_short" >
+                                    </div>
+                                    <div class="col">
+                                        ประสบการณ์ <select id="sp_act" name="sp_act" class="input-border">
+                                            <option value="0" >--กรุณาเลือกประเภทการกระทำ--</option>
+                                        </select>
+                                        <select id="symptom" name="symptom" class="input-border">
+                                            <option value="0" >--กรุณาเลือกอาการ/โรค--</option>
+                                        </select><br>
+                                    </div>
+                                    <div class="col" style="padding-top:5px">
+                                        <label class="label_1">วันที่ </label> <input type="text" name="day1" id="day1" class="rec_day" >
+                                        &nbsp; <label class="label_1">ถึง </label>&nbsp; <input type="text" name="day2" id="day2" class="rec_day" >
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </form>
+                        <!--                        <div id="search_1" style="padding-left: 10px" >
+                                                    <label class="label_1">อายุ</label>
+                                                    <input type="text" name="age1_s" id="age1_s" class="age_box">  ปี &nbsp; ถึง &nbsp;
+                                                    <input type="text" name="age2_s" id="age2_s" class="age_box">  ปี &nbsp;
+                                                    <label class="label_1"> เพศ </label>
+                                                    &nbsp;<label><input type="radio" class="radio_but" name="gender_s1" value="1" > ชาย</label>
+                                                    &nbsp;<label><input type="radio" class="radio_but" name="gender_s1" value="2"> หญิง</label>
+                                                </div>
+                        
+                                                <div id="search_2" style="display:none;padding-left: 10px">
+                                                    <label class="label_1">เพศ</label> 
+                                                    &nbsp; <label><input type="radio" class="radio_but" name="gender_s2" value="1" > ชาย</label>
+                                                    &nbsp; <label><input type="radio" class="radio_but" name="gender_s2" value="2"> หญิง</label>
+                        
+                                                    &nbsp; <label class="label_1">น้ำหนัก</label>
+                                                    <input type="text" name="weight2" id="weight2" class="text_short">  กก.
+                        
+                                                </div>
+                        
+                                                <div id="search_3" style="display:none;padding-left: 10px"> 
+                                                    <label class="label_1">เพศ</label> 
+                                                    &nbsp;<label><input type="radio" class="radio_but" name="gender_s3" value="1">ชาย</label>
+                                                    &nbsp;<label><input type="radio" class="radio_but" name="gender_s3" value="2">หญิง</label>
+                                                    &nbsp;<label class="label_1">ประสบการณ์</label> &nbsp;
+                        
+                        
+                                                    <select name="exp_s" id="exp_s"   >
+                        
+                        
+                                                    </select>
+                                                </div>-->
+
+
                         <hr>
-                        <div class="row">
-                            <div class="col-md-1"><label class="label_1">SORT</label></div>
-                            <div class="col-md-5">
-                                <label><input type="checkbox" class="radio_but" name="symptom_sort" id="symptom_sort" >&nbsp;อาการโรค</label> &nbsp;
-                                <label><input type="checkbox" class="radio_but" name="age_sort" id="age_sort"  >&nbsp;อายุ</label> &nbsp;
-                                <label><input type="checkbox" class="radio_but" name="weight_sort" id="weight_sort" >&nbsp;น้ำหนัก</label> &nbsp;
-                                <label><input type="checkbox" class="radio_but" name="gender_sort" id="gender_sort" >&nbsp;เพศ</label> &nbsp;
-                                <label><input type="checkbox" class="radio_but" name="grade_sort" id="grade_sort" >&nbsp;ผลประเมิน</label> &nbsp;
+                        <div class="col" style="display:none">
+                            <div class="row">
+                                <div class="col-md-1"><label class="label_1">SORT</label></div>
+                                <div class="col-md-5">
+                                    <label><input type="checkbox" class="radio_but" name="symptom_sort" id="symptom_sort" >&nbsp;อาการโรค</label> &nbsp;
+                                    <label><input type="checkbox" class="radio_but" name="age_sort" id="age_sort"  >&nbsp;อายุ</label> &nbsp;
+                                    <label><input type="checkbox" class="radio_but" name="weight_sort" id="weight_sort" >&nbsp;น้ำหนัก</label> &nbsp;
+                                    <label><input type="checkbox" class="radio_but" name="gender_sort" id="gender_sort" >&nbsp;เพศ</label> &nbsp;
+                                    <label><input type="checkbox" class="radio_but" name="grade_sort" id="grade_sort" >&nbsp;ผลประเมิน</label> &nbsp;
+                                </div>
                             </div>
                         </div>
 
@@ -380,42 +434,25 @@
 
                         <hr style="border-color: black">
                         <!--Example table-->
-                        <table class="table table-hover" id="search_result">
-                            <thead>
-                                <tr>
-                                    <th>วันที่</th>
-                                    <th>ชื่อ</th>
-                                    <th>เพศ</th>
-                                    <th>อายุ(ปี)</th>
-                                    <th></th>
-                                    <th></th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="searh_data">
-                                <?php
-                                $i = 0;
-                                for ($i = 0; $i < 3; $i++) {
-                                    ?>
-                                    <tr onclick="view_user('<?php echo $i; ?>')" id="<?php echo $i; ?>">
-                                        <td>นายกอ ขอคอ</td>
-                                        <td>ชาย</td>
-                                        <td>35</td>
-                                        <td>75</td>
-                                        <td>เคย</td>
-                                        <td> 
-                                            <button type="button" style="height: 30px;padding: 2px 5px;" class="btn btn-success" data-toggle="modal" data-target="#edit_modal">
-                                                แก้ไข
-                                            </button>
-                                        </td>
+                        <div class="col">
+                            <table class="table table-bordered table-hover" id="search_table" style="width:100%;border: 1px solid black">
+                                <thead>
+                                    <tr>
+                                        <th>วันที่</th>
+                                        <th>ชื่อ</th>
+                                        <th>เพศ</th>
+                                        <th>อายุ(ปี)</th>
+                                        <th>ประสบการณ์</th>
+                                        <th>Action</th>
                                     </tr>
-                                    <?php
-                                }
-                                ?>
+                                </thead>
+                                <tbody id="search_data">
 
-                            </tbody>
 
-                        </table>
+                                </tbody>
+
+                            </table>
+                        </div>
                         <!-- Edit Button-->
                         <!--                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                                                     แก้ไข
@@ -424,7 +461,7 @@
                         <!-- Modal Edit --> 
 
 
-
+                        <!------------------------   FORM SEARCH   ------------------------------------------***************************************-->
                     </div>
                     <div style="display: none;" id="choice3">
                         <form id="test" name="test" method="POST" enctype="multipart/form-data">
@@ -475,10 +512,17 @@
             dayNamesMin: ['อา.', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.'],
             monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
             monthNamesShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.']};
-        $("#rec_day").datepicker();
-        $("#rec_day_s").datepicker();
-        $("#birthday").datepicker();
-        $("#birthday_s").datepicker();
+        $("#patient_save input#rec_day").datepicker();
+
+        $("#patient_save input#birthday").datepicker();
+
+        $("#patient_edit input#rec_day_s").datepicker();
+        $("#patient_edit input#birthday_s").datepicker();
+
+
+        $("#search_form input#day1").datepicker();
+        $("#search_form input#day2").datepicker();
+
 
         $.datepicker.regional['th'] = {
             changeMonth: true,
@@ -493,17 +537,26 @@
             defaultDate: toDay,
             prevText: 'ก่อนหน้า',
             nextText: 'ถัดไป',
-            yearRange: '-20:+20',
+            yearRange: '-150:+20',
             buttonText: 'เลือก',
             dateFormat: 'dd/mm/yy'
         };
         $.datepicker.setDefaults($.datepicker.regional['th']);
 
         $(function () {
-            $("#rec_day").datepicker("setDate", new Date());
-            $("#rec_day_s").datepicker("setDate", new Date());
-            $("#birthday").datepicker("setDate", new Date());
-            $("#birthday_s").datepicker("setDate", new Date());
+            $("#patient_save input#rec_day").datepicker("setDate", new Date());
+            $("#patient_save input#birthday").datepicker("setDate", new Date());
+            $("#patient_save input#birthday").val("");
+
+            $("#patient_edit input#rec_day_s").datepicker("setDate", new Date());
+            $("#patient_edit input#birthday_s").datepicker("setDate", new Date());
+
+            $("#search_form input#day1").datepicker("setDate", new Date());
+            $("#search_form input#day2").datepicker("setDate", new Date());
+            $("#search_form input#day1").val("");    
+            
+            $("#search_form input#day2").val("");
+            
         });
 
     });

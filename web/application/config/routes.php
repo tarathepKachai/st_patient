@@ -57,3 +57,5 @@ $route['user/index'] = 'user_Controller/main_page';
 $route['user/test'] = 'user_Controller/test';
 
 $route['guzzle'] = 'user_Controller/guzzle';
+$route['user/get_prefix'] = 'user_Controller/get_prefix';
+$route['sp/get_sp_info/(:num)'] = 'user_Controller/get_sp_info/$1';

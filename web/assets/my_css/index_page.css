@@ -14,12 +14,11 @@ body {
 
 .program_header {
     text-align: center;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin:auto;
     margin-top: 10px;
-    margin-right: 10%;
-    width: 80%;
-    padding-left: 30px;
+   
+    width: 97%;
+    padding-left: 10px;
     background-color: #66b3ff;
     border: 5px solid black;
     border-radius: 5px;
@@ -131,6 +130,15 @@ input.rec_day{
 }
 
 
+.wide_box{
+    padding: 0px 5px 0px 5px;
+    width: 330px;
+    height: 25px;
+    font-size: 15px;
+    border:1px black solid;
+    border-radius: 2px;
+}
+
 .text_short{
     padding: 0px 5px 0px 5px;
     width: 100px;
@@ -170,15 +178,21 @@ div.scrollable {
 
 }
 
+
+
 .modal-edit{
     max-width: 75%;
 
 }
 
-table #search_result {
-    width: 95%;
-    text-align: center;
+.modal-add{
+    max-width:65%;
 
+}
+
+table th {
+
+    text-align: center;
 }
 
 
@@ -225,12 +239,33 @@ tbody .search_data tr:hover{
     height:25px;
     text-align: center;
     border: 1px solid black;
-      border-radius: 2px;
+    border-radius: 2px;
 }
 
 .input-border{
     border: 1px solid black;
     border-radius: 2px;
 }
+
+#sp_info_table{
+    width: 90%;
+    margin: 0 auto; 
+}
+
+#sp_info_table th{
+    text-align: center;
+    border: 1px solid black;
+}
+#sp_info_table td{
+    text-align: center;
+    border: 1px solid black;
+}
+
+#sp_info_table td:hover{
+    background-color: #e6e6e6;
+    cursor: pointer;
+
+}
+
 
 

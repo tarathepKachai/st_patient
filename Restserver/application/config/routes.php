@@ -58,6 +58,27 @@ $route['API'] = "Rest_server";
 $route['get_test'] = "api/News/user";
 
 $route['get_test2'] = "api/News/usera";
-$route['api/patient/save']="api/Patient/patient_save";
-$route['api/patient/user']="api/Patient/user";
+$route['patient/save']="api/Patient/patient_save";
+$route['patient/user']="api/Patient/user";
+
+$route['prefix_list']="api/Patient/prefix";
+$route['person_status_list']="api/Patient/person_status";
+$route['edu_list']="api/Patient/edu_list";
+$route['time_sp_list']="api/Patient/time_sp_list";
+$route['sp_list']="api/Patient/sp_list";
+$route['symptom_list']="api/Patient/symptom_list";
+$route['sp_act_list']="api/Patient/sp_act_list";
+$route['evaluation_list']="api/Patient/evaluation_list";
+
+
+$route['get_sp_info_by_id']="api/Patient/get_sp_info_by_id";
+$route['get_sp_by_id']="api/Patient/get_sp_by_id";
+$route['get_sp_data']="api/Patient/get_sp_data";
+
+$route['sp_save']="api/Patient/sp_save";
+$route['save_sp_info']="api/Patient/save_sp_info";
+
+
+
+
 
