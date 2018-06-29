@@ -6,12 +6,41 @@ $(document).ready(function () {
         $(prevPopup).modal('show');
     });
     get_form_option();
+
+    $("#search_option").change(function () {
+        console.log($('#search_table').css('display'));
+        console.log($('#search_table2').css('display'));
+
+        if ($('#table2').css('display') === "none") {
+            $('#table2').css('display', 'block');
+            $('#table1').css('display', 'none');
+
+        } else {
+            $('#table2').css('display', 'none');
+            $('#table1').css('display', 'block');
+        }
+    });
+
     //$('#example').DataTable();
     var myTable = $('#search_table').DataTable({
         "pageLength": 5,
         "ajax": {
             url: "http://localhost/st_patient/Restserver/api/Patient/sp_data_table",
             type: 'POST',
+            "dataSrc": function (json) {
+                //Make your callback here.
+                dataReport = json.data;
+                console.log(dataReport);
+                return json.data;
+            }
+        }
+    });
+
+    var myTable2 = $('#search_table2').DataTable({
+        "pageLength": 5,
+        "ajax": {
+            url: api_url + "sp_info_data_table",
+            type: 'GET',
             "dataSrc": function (json) {
                 //Make your callback here.
                 dataReport = json.data;
@@ -492,27 +521,35 @@ function checkbox_check() {
 }
 
 function search_submit() {
-    $("#search_table").css("display", "none");
-    var table = $("#search_table").DataTable();
-    table.clear();
-    table.destroy();
+//    $("#search_table").css("display", "none");
+//    var table = $("#search_table").DataTable();
+//    table.clear();
+//    table.destroy();
+//
+//    $('#search_table').DataTable({
+//        "pageLength": 5,
+//        "ajax": {
+//            url: "http://localhost/st_patient/Restserver/api/Patient/search_person",
+//            type: 'POST',
+//            data: $("#search_form").serialize(),
+//            "dataSrc": function (json) {
+//                //Make your callback here.
+//                dataReport = json.data;
+//                console.log(dataReport);
+//                return json.data;
+//            }
+//        }
+//    });
+//    $("#search_table").css("display", "block");
 
-    $('#search_table').DataTable({
-        "pageLength": 5,
-        "ajax": {
-            url: "http://localhost/st_patient/Restserver/api/Patient/sp_data_table",
-            type: 'POST',
-            data: $("#search_form").serialize(),
-            "dataSrc": function (json) {
-                //Make your callback here.
-                dataReport = json.data;
-                console.log(dataReport);
-                return json.data;
-            }
+    $.ajax({
+        url:api_url+"search_person",
+        type:"POST",
+        data:$("#search_form").serialize(),
+        success:function(data){
+            console.log(data);
         }
     });
-    $("#search_table").css("display", "block");
-
 
 }
 function test_t() {
@@ -873,12 +910,15 @@ function back_to_edit() {
 }
 
 function more_opt() {
+    
     if ($('#more_sec').css('display') == 'none') {
         $("#more_sec").css('display', 'block');
         $("#more_opt").html("ซ่อนตัวเลือกการค้นหา");
+        $("#option").val('2');
     } else {
         $("#more_sec").css('display', 'none');
         $("#more_opt").html("ตัวเลือกการค้นหาเพิ่มเติม");
+        $("#option").val('1');
     }
 }
 

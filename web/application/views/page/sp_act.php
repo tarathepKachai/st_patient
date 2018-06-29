@@ -6,11 +6,11 @@
 
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                  ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                          ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                  ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                          ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />
@@ -38,7 +38,7 @@ function convert_date_be($date) {
 ?>
 
 
-<div style="padding-top: 20px;padding-bottom: 20px;background-color:white;;margin-top: 10px">
+<div style="padding-top: 20px;padding-bottom: 20px;background-color:white;margin:auto;margin-top: 10px;width:98%;border: 1px solid ">
     <div  style="text-align: center" >
         <h2  >อาการและโรคของผู้ป่วยจำลอง: <span id='name'></span></h2>
     </div>
@@ -46,26 +46,34 @@ function convert_date_be($date) {
         <button type="button" style="height: 35px;padding: 5px 7px;" class="btn btn-success" onclick="add_sp_info()">เพิ่ม</button>
     </div>
     <div style="padding-top:10px">
-        <table id="sp_info_table" class="table table-bordered ">
+
+
+
+        <table id="sp_info_table" class="table_sp" >
             <thead>
-            <th style="width: 150px">วันที่ </th>
-            <th style="width: 200px">ประเภทการกระทำ</th>
-            <th>อาการ/โรค</th>
-            <th style="width: 150px"> ผลการประเมิน </th>
-            <th>หมายเหตุ</th>
+                <tr>
+                    <th  style="width: 150px;">วันที่ </th>
+                    <th  style="width: 200px;">ประเภทการกระทำ</th>
+                    <th  style="">อาการ/โรค</th>
+                    <th style="width: 150px;"> ผลการประเมิน </th>
+                    <th style="">หมายเหตุ</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody id="sp_info_data" >
 
             </tbody>
         </table>
+
     </div>
+
 
 
 
 </div>
 
 
-<!-- /////////////////////////////////////////   MODAL ADD /////////////////////////////////////////////////////////////////-->
+<!-- /////////////////////////////////////////   MODAL ADD   ///////////////////////////////////////////////////////////////// -->
 
 <div class="modal fade" id="add_sp_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-add" role="document">
@@ -109,20 +117,55 @@ function convert_date_be($date) {
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="save_sp_info(<?php echo $id; ?>)">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" onclick="save_sp_info(<?php echo $id; ?>)">บันทึก</button>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- /////////////////////////////////////////   MODAL ADD /////////////////////////////////////////////////////////////////-->
+<!--   /////////////////////////////////////////   MODAL ADD END  /////////////////////////////////////////////////////////////////   -->
+
+<!-- /////////////////////////////////////////   MODAL COMMENT   ///////////////////////////////////////////////////////////////// -->
+
+<div class="modal fade" id="comment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-comment" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">เพิ่มหมายเหตุ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="comment_form" >
+                    <!--/////////////////////////////////////////////////  FORM ///////////////////////////////////////////////////////////////-->
+                    <input type="hidden" name="sp_info_id" id="sp_info_id" >
+                    <div class="col">
+
+                        <label class="label_1">หมายเหตุ</label>
+                        <textarea type="text" class="form-control" style="border-color: black;" id="comment_edit" name="comment_edit" ></textarea>
+                    </div>
+                    <!--/////////////////////////////////////////////////  FORM ///////////////////////////////////////////////////////////////-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" onclick="save_comment()">บันทึก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--   /////////////////////////////////////////   MODAL COMMENT END  /////////////////////////////////////////////////////////////////   -->
 
 
 
 <script>
     var person_id =<?php echo $id; ?>;
+    var tempV = "";
+    var j = "1";
     $(document).ready(function () {
 
 
@@ -198,6 +241,7 @@ function convert_date_be($date) {
             success: function (data) {
 
                 var str = "";
+
                 console.log(data);
                 if (data.error !== "0") {
                     $.each(data, function (idx, obj) {
@@ -208,32 +252,77 @@ function convert_date_be($date) {
                         str += convert_date_ad(obj.date);
                         str += "</td>";
                         str += "<td>";
-                        str += obj.sp_act_id;
+                        str += "<select id='act_" + obj.sp_info_id + "' style='position:relative;width:95%;' name='act_" + obj.sp_info_id + "' onChange='act_update(this.id)' ></select> ";
+                        //str += obj.sp_act_name;
                         str += "</td>";
                         str += "<td>";
-                        str += obj.symp_id;
+                        str += "<select id='symp_" + obj.sp_info_id + "' style='position:relative;width:95%;' name='symp_" + obj.sp_info_id + "' onChange='symp_update(this.id)' ></select> ";
+                        //str += obj.symp_name;
                         str += "</td>";
                         str += "<td>";
-
-                        str += "<select id='eva_" + obj.sp_info_id + "' name='eva_" + obj.sp_info_id + "' onChange='eva(this.id)' ></select> ";
-
+                        str += "<select id='eva_" + obj.sp_info_id + "' name='eva_" + obj.sp_info_id + "' onChange='eva_update(this.id)' ></select> ";
+                        str += "</td>";
+                        str += "<td id='comment_" + obj.sp_info_id + "' onClick='comment_sp(this.id)' >";
+                        str += "<input type='text' id='input_comment_" + obj.sp_info_id + "' name='input_comment" + obj.sp_info_id + "' class='name_medium' readonly value='" + obj.comment + "'>"
+                        //str += obj.comment;
                         str += "</td>";
                         str += "<td>";
-                        str += obj.comment;
+                        str += "<button class='btn btn-danger' style='' onClick='delete_sp_info(this.id)' id='" + obj.sp_info_id + "' > ลบ </button>";
                         str += "</td>";
-                        str += "</tr>";
 
                         $("#sp_info_data").append(str);
 
+                        var y = "1";
+                        $.ajax({
+                            url: api_url + "sp_act_list",
+                            type: "get",
+                            success: function (data) {
+                                $.each(data, function (idx2, obj2) {
+//                                    if (y === "1") {
+//                                        $('#act_' + obj.sp_info_id).append('<option value="0" >ประเมิน</option>');
+//                                        y++;
+//                                    }
+                                    if (obj.sp_act_id === obj2.sp_act_id) {
+                                        $('#act_' + obj.sp_info_id).append('<option selected value="' + obj2.sp_act_id + '" >' + obj2.sp_act_name + '</option>');
+                                    } else {
+                                        $('#act_' + obj.sp_info_id).append('<option value="' + obj2.sp_act_id + '" >' + obj2.sp_act_name + '</option>');
+                                    }
+
+                                });
+                            }
+                        });
+
                         var j = "1";
+                        $.ajax({
+                            url: api_url + "symptom_list",
+                            type: "get",
+                            success: function (data) {
+                                $.each(data, function (idx2, obj2) {
+//                                    if (j === "1") {
+//                                        $('#symp_' + obj.sp_info_id).append('<option value="0" >ประเมิน</option>');
+//                                        j++;
+//                                    }
+                                    if (obj.symp_id === obj2.symp_id) {
+                                        $('#symp_' + obj.sp_info_id).append('<option selected value="' + obj2.symp_id + '" >' + obj2.symp_name + '</option>');
+                                    } else {
+                                        $('#symp_' + obj.sp_info_id).append('<option value="' + obj2.symp_id + '" >' + obj2.symp_name + '</option>');
+                                    }
+
+                                });
+                            }
+                        });
+
+                        var x = "1";
                         $.ajax({
                             url: api_url + "evaluation_list",
                             type: "get",
                             success: function (data) {
+
                                 $.each(data, function (idx2, obj2) {
-                                    if (j === "1") {
+                                    if (x === "1") {
                                         $('#eva_' + obj.sp_info_id).append('<option value="0" >ประเมิน</option>');
-                                        j++;
+                                        //console.log("logJ:" + j);
+                                        x++;
                                     }
                                     if (obj.evaluation === obj2.eva_id) {
                                         $('#eva_' + obj.sp_info_id).append('<option selected value="' + obj2.eva_id + '" >' + obj2.eva_id + '</option>');
@@ -242,41 +331,27 @@ function convert_date_be($date) {
                                     }
 
                                 });
-
-
                             }
                         });
 
 //                        if (obj.evaluation === null || obj.evaluation === "") {
-//
 //                        } else {
 //                            console.log(obj.sp_info_id + "/" + obj.evaluation);
-//
 //                            $('#eva_' + obj.sp_info_id + ' option[value="' + obj.evaluation + '"]').attr("selected", true);
 //                        }
                     });
 
-
-
-
                 } else {
-                    console.log("xx");
                     str += "<tr><td colspan='5'>ไม่มีข้อมูล</td></tr>";
                     $("#sp_info_data").html(str);
                 }
 
-
             }
         });
-
-
-
-
 
         $('#add_sp_modal').on('hidden.bs.modal', function () {
             $("#form_sp_info")[0].reset();
         });
-
 
 //        var myTable = $('#sp_info_table').DataTable({
 //            "pageLength": 5,
@@ -284,13 +359,12 @@ function convert_date_be($date) {
 //                url: "http://localhost/st_patient/Restserver/api/Patient/sp_info_data_table",
 //                type: 'POST',
 //                data: {
-//                    id: <?php //echo $id;                                            ?>
+//                    id: <?php //echo $id;                                                                    ?>
 //                },
 //                "dataSrc": function (json) {
 //                    //Make your callback here.
 //                    dataReport = json.data;
-//                    console.log(json);
-//                    
+//                    console.log(json);  
 //                    return json.data;
 //                }
 //            }
@@ -306,24 +380,6 @@ function convert_date_be($date) {
 
         return day + "/" + month + "/" + year;
     }
-
-    function eva(sp_info_id) {
-        //alert(sp_info_id + "//" + person_id);
-        var temp = sp_info_id.split("_")
-        var id = temp[1];
-        console.log(id);
-//        $.ajax({
-//            url: api_url + "update_evaluation",
-//            type:"POST",
-//            data: {
-//                sp_info_id: id,
-//                person_id: person_id,
-//                
-//            }
-//        });
-
-    }
-
 
 </script>
 

@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                         ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                            ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                         ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                            ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                         ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                            ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -332,7 +332,7 @@
                     <div style="display: none;" id="choice2" class="scrollable">
                         <!------------------------   FORM SEARCH   ------------------------------------------***************************************-->
                         <form name="search_form" id="search_form" >
-                            <label class="label_1">ประเภทการค้นหา</label>
+                            <label class="label_1">ประเภท</label>
                             <select name="search_option" id="search_option"   >
 
                                 <option value="1" >--รายชื่อผู้ป่วยจำลอง--</option>
@@ -340,16 +340,17 @@
 
 
                             </select>
-                            &nbsp; <label class="label_1">ID SP</label>
-                            <input type="text" name="id_search" id="id_search" class="text_short">   
+                            &nbsp; <label class="label_1">เลขบัตรประชาชน</label>
+                            <input type="text" name="id_search" id="id_search" class="text_short" style="width: 150px">   
                             &nbsp; <label class="label_1">ชื่อ</label>&nbsp; <input type="text" name="name_search" id="name_search" class="name_medium">   &nbsp;
                             &nbsp; <label class="label_1">นามสกุล</label> &nbsp;<input type="text" name="lastname_search" id="lastname_search" class="name_medium">   &nbsp;
-                            <button  onclick="search_submit()" class="button-search" >ค้นหา</button>
+                            <button type="button"  onclick="search_submit()" class="button-search" >ค้นหา</button>
                             <!--                        <button type="button" style="height: 30px;padding: 2px;" class="btn btn-success" data-toggle="modal" data-target="#sp_modal">
                                                         แก้ไข
                                                     </button>-->
+                            <input type="hidden" name="option" id="option" value="1" >
                             <div id="search_1" class="col" style="padding-left: 10px"  >
-                                <a onclick="more_opt()" href="#" id="more_opt" style="font-size: 15px" >ตัวเลือกการค้นหาเพิ่มเติม</a> <br>
+                                <a onClick="more_opt()"  href="#" id="more_opt" style="font-size: 15px" >ตัวเลือกการค้นหาเพิ่มเติม</a> <br>
                                 <div style="margin-top:10px;display:none" id="more_sec"  >
                                     <div class="col">
                                         <label> เพศ </label>
@@ -434,7 +435,7 @@
 
                         <hr style="border-color: black">
                         <!--Example table-->
-                        <div class="col">
+                        <div class="col" id="table1" >
                             <table class="table table-bordered table-hover" id="search_table" style="width:100%;border: 1px solid black">
                                 <thead>
                                     <tr>
@@ -447,6 +448,28 @@
                                     </tr>
                                 </thead>
                                 <tbody id="search_data">
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                        
+                        <div class="col" id="table2" style="display:none">
+                            <table class="table table-bordered table-hover" id="search_table2" style="width:100%;border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                        <th  style="width: 150px;">วันที่ </th>
+                                        <th  style="width: 150px;">ชื่อ </th>
+                                        <th  style="width: 200px;">ประเภทการกระทำ</th>
+                                        <th  style="">อาการ/โรค</th>
+                                        <th style="width: 150px;"> ผลการประเมิน </th>
+                                        <th style="">หมายเหตุ</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="search_data2">
 
 
                                 </tbody>
@@ -553,10 +576,10 @@
 
             $("#search_form input#day1").datepicker("setDate", new Date());
             $("#search_form input#day2").datepicker("setDate", new Date());
-            $("#search_form input#day1").val("");    
-            
+            $("#search_form input#day1").val("");
+
             $("#search_form input#day2").val("");
-            
+
         });
 
     });

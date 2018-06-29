@@ -41,13 +41,12 @@ class Patient_model extends CI_Model {
 
         return $query->result();
     }
-    
-    public function get_evaluation_list(){
-        
+
+    public function get_evaluation_list() {
+
         $query = $this->db->get("evaluation");
-        
+
         return $query->result();
-        
     }
 
     public function get_sp_by_id($id) {
@@ -59,7 +58,7 @@ class Patient_model extends CI_Model {
 
         return $query->result();
     }
-    
+
     public function get_sp_data($id) {
         $this->db->select('*');
         $this->db->from('person_info');
@@ -109,20 +108,20 @@ class Patient_model extends CI_Model {
             return 1;
         }
     }
-    
-    public function get_sp_info_by_id($id){
-        
+
+    public function get_sp_info_by_id($id) {
+
         $where = array(
-          "person_id" => $id  
+            "person_id" => $id
         );
         $this->db->where($where);
         $this->db->join('sp_act', 'sp_info.sp_act_id = sp_act.sp_act_id');
         $this->db->join('symptom', 'sp_info.symp_id = symptom.symp_id');
         $query = $this->db->from("sp_info")->get();
-        if($query->num_rows()>0){
+        if ($query->num_rows() > 0) {
             return $query->result();
-        }else{
-            return array("error"=>"0");
+        } else {
+            return array("error" => "0");
         }
     }
 
@@ -133,26 +132,140 @@ class Patient_model extends CI_Model {
             return $result->num;
         return 0;
     }
-    
+
     public function get_total_sp_info($id) {
-        $this->db->where("person_id",$id);
+        $this->db->where("person_id", $id);
         $query = $this->db->select("COUNT(*) as num")->get("sp_info");
         $result = $query->row();
         if (isset($result))
             return $result->num;
         return 0;
     }
-    
-    public function insert_sp_info($array){
-        
-        $this->db->insert("sp_info",$array);
-        
+
+    public function get_total_sp_info_all() {
+
+        $query = $this->db->select("COUNT(*) as num")->get("sp_info");
+        $result = $query->row();
+        if (isset($result))
+            return $result->num;
+        return 0;
+    }
+
+    public function insert_sp_info($array) {
+
+        $this->db->insert("sp_info", $array);
+
         $result = array(
             "success" => true
         );
-        
+
         return $result;
-        
+    }
+
+    public function update_sp_info($array, $sp_info_id) {
+
+        $where = array(
+            "sp_info_id" => $sp_info_id
+        );
+        $this->db->set($array);
+        $this->db->where($where);
+        $this->db->update("sp_info");
+        $sql = $this->db->last_query();
+        return array($sql);
+    }
+
+    public function update_symptom($array, $sp_info_id) {
+
+        $where = array(
+            "sp_info_id" => $sp_info_id
+        );
+        $this->db->set($array);
+        $this->db->where($where);
+        $this->db->update("sp_info");
+        //$sql = $this->db->last_query();
+        return array("success" => true);
+    }
+
+    public function update_sp_act($array, $sp_info_id) {
+
+        $where = array(
+            "sp_info_id" => $sp_info_id
+        );
+        $this->db->set($array);
+        $this->db->where($where);
+        $this->db->update("sp_info");
+        //$sql = $this->db->last_query();
+        return array("success" => true);
+        // "success"=>true
+    }
+
+    public function save_comment($array, $sp_info_id) {
+
+        $where = array(
+            "sp_info_id" => $sp_info_id
+        );
+
+        $this->db->set($array);
+        $this->db->where($where);
+        $this->db->update("sp_info");
+    }
+
+    public function delete_sp_info($sp_info_id) {
+
+        $where = array(
+            "sp_info_id" => $sp_info_id
+        );
+
+        $this->db->where($where);
+        $result = $this->db->delete("sp_info");
+        return $result;
+    }
+
+    public function get_sp_info_list() {
+        $this->db->join('person_info', 'person_info.person_id = sp_info.person_id');
+        $this->db->join('prefix', 'person_info.prefix = prefix.id');
+        $this->db->join('symptom', 'sp_info.symp_id = symptom.symp_id');
+        $this->db->join('sp_act', 'sp_info.sp_act_id = sp_act.sp_act_id');
+        $query = $this->db->get("sp_info");
+
+        return $query->result();
+    }
+
+    public function search_person($array, $option) {
+
+        $this->db->from("person_info");
+        $this->db->join('prefix', 'person_info.prefix = prefix.id');
+
+        if ($array['id_card'] != null && $array['id_card'] != "") {
+            $this->db->where("id_card", $array['id_card']);
+        }
+
+        if ($array['fname'] != null && $array['fname'] != "") {
+            $this->db->where("fname", $array['fname']);
+        }
+
+        if ($array['lname'] != null && $array['lname'] != "") {
+            $this->db->where("lname", $array['lname']);
+        }
+
+        if ($option == "2") {
+            if ($array['gender'] != 0) {
+                $this->db->where("gender", $array['gender']);
+            }
+            if (($array['age1'] != null && $array['age1'] != "") && ($array['age2'] != null && $array['age2'] != "")) {
+                $arr = array(
+                    "age >= " => $array['age1'],
+                    "age <= " => $array['age2']
+                );
+                $this->db->where($arr);
+            }
+        } else {
+            
+        }
+
+        $result = $this->db->get();
+        $sql = $this->db->last_query();
+        return $result->result();
     }
 
 }

@@ -121,16 +121,15 @@ class Patient extends \Restserver\Libraries\REST_Controller {
                 "error" => "0"
             );
         }
-        
+
         $this->response($result, 200);
     }
-    
-    public function evaluation_list_get(){
-        
+
+    public function evaluation_list_get() {
+
         $data = $this->Patient_model->get_evaluation_list();
-        
-        $this->response($data,200);
-        
+
+        $this->response($data, 200);
     }
 
     public function sp_data_table_post() {
@@ -233,6 +232,57 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         );
         echo json_encode($output);
         exit();
+    }
+
+    public function sp_info_data_table_get() {
+
+        // Datatables Variables
+
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+
+
+        $sp = $this->Patient_model->get_sp_info_list();
+
+        $data = array();
+        $count = count($sp);
+        if (!isset($sp['error'])) {
+            foreach ($sp as $r) {
+                $date = $this->convert_date_be($r->date);
+                $data[] = array(
+                    "<span id='date_" . $r->sp_info_id . "' >" . $date . "</span>",
+                    "<span id='name_" . $r->person_id . "' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</span>",
+                    "<span id='sp_act" . $r->sp_info_id . "' >" . $r->sp_act_name . " </span>",
+                    "<span id='symp_" . $r->sp_info_id . "' >" . $r->symp_name . " </span>",
+                    "<span id='evaluation_" . $r->sp_info_id . "' >" . $r->evaluation . "</span>",
+                    "<span id='comment_" . $r->sp_info_id . "' >" . $r->comment . "</span>"
+                );
+            }
+        } else {
+            foreach ($sp as $r) {
+
+                //$date = $this->convert_date_be($r->date);
+                $data[] = array(
+                );
+            }
+        }
+
+        $total_sp_info = $this->Patient_model->get_total_sp_info_all();
+
+        $output = array(
+            "draw" => $draw,
+            "recordsTotal" => $total_sp_info,
+            "recordsFiltered" => $total_sp_info,
+            "data" => $data
+        );
+        echo json_encode($output);
+        exit();
+    }
+
+    public function test_info_get() {
+        $sp = $this->Patient_model->get_sp_info_list();
+        $this->response($sp, 200);
     }
 
     public function sp_save_post() {
@@ -351,9 +401,9 @@ class Patient extends \Restserver\Libraries\REST_Controller {
     public function save_sp_info_post() {
 
         //$person_id = $this->post("person_id");
-        
+
         $date = $this->convert_date_ad($this->post("date"));
-        
+
         $array = array(
             "date" => $date,
             "person_id" => $this->post("person_id"),
@@ -364,7 +414,7 @@ class Patient extends \Restserver\Libraries\REST_Controller {
             "datetime" => date("Y-m-d H:i:s"),
             "last_update" => date("Y-m-d H:i:s")
         );
-        
+
         $data = $this->Patient_model->insert_sp_info($array);
 
 
@@ -378,6 +428,111 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         //get age from date or birthdate
         $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md") ? ((date("Y") - $birthDate[2]) - 1) : (date("Y") - $birthDate[2]));
         return $age + 543;
+    }
+
+    public function update_sp_act_post() {
+
+        $sp_info_id = $this->post("sp_info_id");
+        $sp_act_id = $this->post("sp_act_id");
+
+        $array = array(
+            "sp_act_id" => $sp_act_id
+        );
+
+        $result = $this->Patient_model->update_sp_info($array, $sp_info_id);
+
+        $this->response($result, 200);
+    }
+
+    public function update_evaluation_post() {
+
+        $sp_info_id = $this->post("sp_info_id");
+        $eva = $this->post("evaluation");
+
+        if ($eva == "0") {
+            $eva = "";
+        }
+
+        $array = array(
+            "evaluation" => $eva
+        );
+
+        $result = $this->Patient_model->update_sp_info($array, $sp_info_id);
+
+        $this->response($result, 200);
+    }
+
+    public function update_symptom_post() {
+
+        $sp_info_id = $this->post("sp_info_id");
+        $symp = $this->post("symptom");
+
+        $array = array(
+            "symp_id" => $symp
+        );
+
+        $result = $this->Patient_model->update_sp_info($array, $sp_info_id);
+
+        $this->response($result, 200);
+    }
+
+    public function save_comment_post() {
+
+        $sp_info_id = $this->post("sp_info_id");
+        $comment = $this->post("comment");
+
+        $array = array(
+            "comment" => $comment
+        );
+
+        $result = $this->Patient_model->update_sp_info($array, $sp_info_id);
+
+        $this->response($result, 200);
+    }
+
+    public function delete_sp_info_post() {
+
+        $sp_info_id = $this->post("sp_info_id");
+
+        $result = $this->Patient_model->delete_sp_info($sp_info_id);
+
+        $this->response("result", 200);
+    }
+
+    public function search_person_post() {
+
+        $option = $this->post("option");
+        $id_card = $this->post("id_search");
+        $fname = $this->post("name_search");
+        $lname = $this->post("lastname_search");
+        $gender = $this->post("gender_s");
+        $age1 = $this->post("age_s1");
+        $age2 = $this->post("age_s2");
+        $weight1 = $this->post("weight_s1");
+        $weight2 = $this->post("weight_s2");
+        $sp_act = $this->post("sp_act");
+        $symptom = $this->post("symptom");
+        $day1 = $this->post("day1");
+        $day2 = $this->post("day2");
+
+        $array = array(
+            "id_card" => $id_card,
+            "fname" => $fname,
+            "lname" => $lname,
+            "gender" => $gender,
+            "age1" => $age1,
+            "age2" => $age2,
+            "weight1" => $weight1,
+            "weight2" => $weight2,
+            "sp_act" => $sp_act,
+            "symptom" => $symptom,
+            "day1" => $day1,
+            "day2" => $day2
+        );
+        
+        $result = $this->Patient_model->search_person($array,$option);
+
+        $this->response($result, 200);
     }
 
 }
