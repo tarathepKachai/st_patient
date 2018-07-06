@@ -2,14 +2,14 @@
 <link href="<?php echo base_url("assets/my_css/index_page.css"); ?>" rel="stylesheet" >
 
 <script src="<?php echo base_url("assets/my_js/index_page.js"); ?>" ></script>
-<!--<link type="text/css" href="<?php //echo base_url();                                                                                                            ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
+<!--<link type="text/css" href="<?php //echo base_url();                                                                                                              ?>assets/datepicker/css/ui-lightness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />-->
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                            ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                              ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                            ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                              ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />	
@@ -51,7 +51,7 @@
                             <div class="col-md-12">
 
                                 <label class="label_1">วัน/เดือน/ปี </label> &nbsp; <input  type="text" name="rec_day" id="rec_day" class="rec_day" > 
-                                <span class="error_report" id="rec_day_error" ></span>
+                                <span class="error_report" id="rec_day_error" ></span> 
                             </div>
 
                             <div class="col-md-12">
@@ -64,11 +64,7 @@
                                                         <select name="prefix" id="prefix" class="input-border">
 
                                                         </select>
-<!--                                                        <input  type="radio" class="radio_but" name="prefix" value="1" > ด.ญ. &nbsp; </label>
-                                                    <label><input type="radio" class="radio_but" name="prefix" value="2" > ด.ช. &nbsp; </label>
-                                                    <label><input type="radio" class="radio_but" name="prefix" value="3" > นาย &nbsp; </label>
-                                                    <label><input type="radio" class="radio_but" name="prefix" value="4" > นาง &nbsp; </label>
-                                                    <label><input type="radio" class="radio_but" name="prefix" value="5" > นางสาว &nbsp; </label>-->
+
                                                 </div>
                                             </div>
 
@@ -173,7 +169,7 @@
                             <div class="col">
                                 <label class="label_1" >อาชีพ</label> <input type="text" style="width:30%" name="job" id="job" class="name_medium" > 
                                 &nbsp;<label class="label_1" >ที่ทำงาน</label> <input type="text" style="width:30%" name="workplace" id="workplace" class="name_medium" >  
-                                &nbsp;<label class="label_1" >โทรศัพท์</label> <input type="text"  name="tel_work" id="tel_work" class="name_medium" >  
+                                &nbsp;<label class="label_1" >โทรศัพท์</label> <input type="text" maxlength="10" name="tel_work" id="tel_work" class="name_medium" >  
 
                             </div>
 
@@ -203,7 +199,7 @@
                                 <label for="colFormLabelSm" class="label_1">บุคคลที่สามารถติดต่อได้ในกรณีฉุกเฉิน</label>
                                 <input style="margin-top: 7px" type="text" class="name_medium" name="person_em" id="person_em"> 
                                 <label class="label_1" >โทรศัพท์</label>
-                                <input style="margin-top: 7px" type="text" class="name_medium" name="tel_em" id="tel_em"> 
+                                <input style="margin-top: 7px" type="text" maxlength="10" class="name_medium" name="tel_em" id="tel_em"> 
                             </div>
                             <hr>
                             <div class="col">
@@ -332,7 +328,7 @@
                     <div style="display: none;" id="choice2" class="scrollable">
                         <!------------------------   FORM SEARCH   ------------------------------------------***************************************-->
                         <form name="search_form" id="search_form" >
-                            <label class="label_1">ประเภท</label>
+                            <label class="label_1">แสดง</label>
                             <select name="search_option" id="search_option"   >
 
                                 <option value="1" >--รายชื่อผู้ป่วยจำลอง--</option>
@@ -340,8 +336,8 @@
 
 
                             </select>
-                            &nbsp; <label class="label_1">เลขบัตรประชาชน</label>
-                            <input type="text" name="id_search" id="id_search" class="text_short" style="width: 150px">   
+                            &nbsp; <label class="label_1">เลขที่บัตรประชาชน</label>
+                            <input type="text" name="id_search" id="id_search" maxlength="13" class="text_short" style="width: 130px">   
                             &nbsp; <label class="label_1">ชื่อ</label>&nbsp; <input type="text" name="name_search" id="name_search" class="name_medium">   &nbsp;
                             &nbsp; <label class="label_1">นามสกุล</label> &nbsp;<input type="text" name="lastname_search" id="lastname_search" class="name_medium">   &nbsp;
                             <button type="button"  onclick="search_submit()" class="button-search" >ค้นหา</button>
@@ -361,7 +357,7 @@
                                         </select>
                                         &nbsp; &nbsp; อายุ (ปี)&nbsp; <input type="text" name="age_s1" id="age_s1" class="text_short" > 
                                         ถึง <input type="text" name="age_s2" id="age_s2" class="text_short" >
-                                        &nbsp; &nbsp; น้ำหนัก (ก.ก.)&nbsp; <input type="text" name="weight_s1" id="weight_s1" class="text_short" > 
+                                        &nbsp; &nbsp; น้ำหนัก (กก.)&nbsp; <input type="text" name="weight_s1" id="weight_s1" class="text_short" > 
                                         ถึง <input type="text" name="weight_s2" id="weight_s2" class="text_short" >
                                     </div>
                                     <div class="col">
@@ -376,9 +372,6 @@
                                         <label class="label_1">วันที่ </label> <input type="text" name="day1" id="day1" class="rec_day" >
                                         &nbsp; <label class="label_1">ถึง </label>&nbsp; <input type="text" name="day2" id="day2" class="rec_day" >
                                     </div>
-
-
-
                                 </div>
                             </div>
 
@@ -455,7 +448,7 @@
                             </table>
 
                         </div>
-                        
+
                         <div class="col" id="table2" style="display:none">
                             <table class="table table-bordered table-hover" id="search_table2" style="width:100%;border: 1px solid black;">
                                 <thead>
@@ -499,13 +492,14 @@
             </tr>
 
             <tr>
-                <td class="menu_choice" id="choice_2">
-                    ค้นหา
+                <td class="menu_choice" id="choice_3">
+                    บันทึกตามอาการ
                 </td>
+
             </tr>
             <tr>
-                <td class="menu_choice" id="choice_3">
-                    รายงาน
+                <td class="menu_choice" id="choice_2">
+                    ค้นหา
                 </td>
             </tr>
             <tr>
@@ -517,6 +511,8 @@
     </table>
 
 </div>
+
+<div id='load' class="loading style-2" style='display:none'><div class="loading-wheel"></div></div>
 
 <script type="text/javascript">
     $(function () {
@@ -581,6 +577,8 @@
             $("#search_form input#day2").val("");
 
         });
+
+        
 
     });
 </script>

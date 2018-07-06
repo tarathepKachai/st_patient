@@ -6,11 +6,11 @@
 
 <link type="text/css" href="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.css" rel="stylesheet" />	
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                          ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                            ?>assets/datepicker/js/jquery-1.4.4.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jQueryCalendarThai_Ui1.11.4/jquery-ui-1.11.4.custom.js"></script>
 
-<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                          ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
+<!--<script type="text/javascript" src="<?php //echo base_url();                                                                                                                                                                            ?>assets/datepicker/js/jquery-ui-1.8.10.offset.datepicker.min.js"></script>-->
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 <link type="text/css" href="<?php echo base_url(); ?>assets/jquery-confirm-master/dist/jquery-confirm.min.css" rel="stylesheet" />
@@ -44,10 +44,10 @@ function convert_date_be($date) {
     </div>
     <div style="text-align:center">
         <button type="button" style="height: 35px;padding: 5px 7px;" class="btn btn-success" onclick="add_sp_info()">เพิ่ม</button>
+        &nbsp;
+        <button type="button" style="height: 35px;padding: 5px 7px;" class="btn btn-primary" onclick="edit_person_info(<?php echo $id; ?>)">แก้ไขข้อมูล SP</button>
     </div>
     <div style="padding-top:10px">
-
-
 
         <table id="sp_info_table" class="table_sp" >
             <thead>
@@ -168,6 +168,7 @@ function convert_date_be($date) {
     var j = "1";
     $(document).ready(function () {
 
+        get_form_option();
 
         var d = new Date();
         var toDay = d.getDate() + '/'
@@ -185,8 +186,11 @@ function convert_date_be($date) {
             monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
             monthNamesShort: ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.']};
         $("#form_sp_info input#date").datepicker();
+        $("#patient_edit input#rec_day_s").datepicker();
+        $("#patient_edit input#birthday_s").datepicker();
 
 
+        //$("#patient_save input#searc").datepicker();
 
 
         $.datepicker.regional['th'] = {
@@ -211,7 +215,8 @@ function convert_date_be($date) {
 
         $("#form_sp_info input#date").datepicker("setDate", new Date());
 
-
+        $("#patient_edit input#rec_day_s").datepicker("setDate", new Date());
+        $("#patient_edit input#birthday_s").datepicker("setDate", new Date());
 
 
 
@@ -353,22 +358,15 @@ function convert_date_be($date) {
             $("#form_sp_info")[0].reset();
         });
 
-//        var myTable = $('#sp_info_table').DataTable({
-//            "pageLength": 5,
-//            "ajax": {
-//                url: "http://localhost/st_patient/Restserver/api/Patient/sp_info_data_table",
-//                type: 'POST',
-//                data: {
-//                    id: <?php //echo $id;                                                                    ?>
-//                },
-//                "dataSrc": function (json) {
-//                    //Make your callback here.
-//                    dataReport = json.data;
-//                    console.log(json);  
-//                    return json.data;
-//                }
-//            }
-//        });
+        $('#edu_s').change(function () {
+            if ($(this).val() == '5') { // or this.value == 'volvo'
+                $("#edu_ex_s").css("display", "inline");
+                //$("#edu_detail").attr("disable",false);
+            } else {
+                $("#edu_ex_s").css("display", "none");
+                //$("#edu_detail").attr("disable",true);
+            }
+        });
 
     });
 

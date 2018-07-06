@@ -89,7 +89,7 @@
                     <span class="error_report" id="id_card_error" ></span>
                     <br>-->
                     <div class="col" >
-                        <label class="label_1">วัน/เดือน/ปีเกิด </label> &nbsp; <input type="text" name="birthday" id="birthday" class="rec_day" >
+                        <label class="label_1">วัน/เดือน/ปีเกิด </label> &nbsp; <input type="text" name="birthday" id="birthday_s" class="rec_day" >
                         <span class="error_report" id="birthday_error" ></span> &nbsp;
                         <label class="label_1">เลขที่บัตรประชาชน </label>
 
@@ -179,7 +179,7 @@
                                 <select name="edu" id="edu_s" class="input-border" >
 
                                 </select>
-                                <span id="edu_ex" style="display:none"  >สาขา &nbsp;<input type="text" class="wide_box" id="edu_detail" name="edu_detail" ></span>
+                                <span id="edu_ex_s" style="display:none"  >สาขา &nbsp;<input type="text" class="wide_box" id="edu_detail_s" name="edu_detail" ></span>
                                 <!--                                        <div class="form-check form-check-inline">
                                                                             <label class="form-check-label" >
                                                                                 <input class="form-check-input" type="radio" name="degree" value="1">
@@ -291,9 +291,10 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="close_modal()" data-dismiss="modal">Close</button>
-                <button type="button" id="manage_btn"  class="btn btn-primary" onclick="manage_sp_act()">เพิ่ม อาการ/โรค</button>
+<!--                <button type="button" id="manage_btn"  class="btn btn-primary" onclick="manage_sp_act()">เพิ่ม อาการ/โรค</button>-->
                 <button type="button" id="save_btn" class="btn btn-primary" onclick="update_sp()" >Save changes</button>
             </div>
         </div>
     </div>
 </div>
+

@@ -1,4 +1,18 @@
 var check_sub = 0;
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+var yyyy = today.getFullYear();
+yyyy = yyyy + 543;
+if (dd < 10) {
+    dd = '0' + dd
+}
+
+if (mm < 10) {
+    mm = '0' + mm
+}
+
+today = mm + '/' + dd + '/' + yyyy;
 
 $(document).ready(function () {
     $('.modal-switch-btn').click(function () {
@@ -33,7 +47,31 @@ $(document).ready(function () {
                 console.log(dataReport);
                 return json.data;
             }
-        }
+        },
+        dom: 'Bflrtip',
+        buttons: {
+            buttons: [{
+                    extend: 'excelHtml5',
+                    title: 'รายงาน ' + today,
+                    className: 'copyButton',
+                    messageTop: 'This print was produced using the Print button for DataTables \n test',
+                    customize: function (xlsx) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                        //$('row c[r^="C"]', sheet).attr('s', '2');
+
+
+                    },
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
+                }, {
+                    extend: 'colvis',
+                    className: 'copyButton',
+                }
+            ]}
     });
 
     var myTable2 = $('#search_table2').DataTable({
@@ -47,7 +85,26 @@ $(document).ready(function () {
                 console.log(dataReport);
                 return json.data;
             }
-        }
+        },
+        dom: 'Bflrtip',
+        buttons: {
+            buttons: [{
+                    extend: 'excelHtml5',
+                    title: 'รายงาน ' + today,
+                    className: 'copyButton',
+//                    messageTop: 'This print was produced using the Print button for DataTables',
+                    customize: function (xlsx) {
+                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                        //$('row c[r^="C"]', sheet).attr('s', '2');
+
+
+                    }
+                }, {
+                    extend: 'colvis',
+                    className: 'copyButton',
+                }
+            ]}
     });
 
 //    $('#search_table').on('click', 'tbody tr', function () {
@@ -224,8 +281,20 @@ $(document).ready(function () {
     $('#edu').change(function () {
         if ($(this).val() == '5') { // or this.value == 'volvo'
             $("#edu_ex").css("display", "inline");
+            //$("#edu_detail").attr("disable",false);
         } else {
             $("#edu_ex").css("display", "none");
+            //$("#edu_detail").attr("disable",true);
+        }
+    });
+
+    $('#edu_s').change(function () {
+        if ($(this).val() == '5') { // or this.value == 'volvo'
+            $("#edu_ex_s").css("display", "inline");
+            //$("#edu_detail").attr("disable",false);
+        } else {
+            $("#edu_ex_s").css("display", "none");
+            //$("#edu_detail").attr("disable",true);
         }
     });
 
@@ -416,7 +485,7 @@ function submit() {
             });
 
 
-    var check_news = checkbox_check();
+
 
 
     $('textarea').each(
@@ -435,7 +504,7 @@ function submit() {
                 }
             });
 
-    var check = check_submit(check_news);
+    var check = check_submit();
 
 //    VALIDATE END
 
@@ -460,16 +529,16 @@ function submit() {
 
     } else {
 
-        save_data();
+        //save_data();
 
     }
-    //save_data();
+    save_data();
 
 
 }
 
-function check_submit(check_news) {
-    console.log(check_news);
+function check_submit() {
+
     //console.log($("#patient_save").serialize());
     var suc = "1";
     $('form#patient_save :input').each(
@@ -478,19 +547,25 @@ function check_submit(check_news) {
 
                 if (id_input !== "exp_1_detail" && id_input !== "exp_2_detail" && id_input !== "exp_3_detail" && id_input !== "exp_4_detail" && id_input !== "road" && id_input !== "fax" && id_input !== "scar"
                         && id_input !== "line_id" && id_input !== "email") {
-                    if ((!el.value || el.value === '')) {
+                    if ((el.value === null || el.value === '')) {
                         suc = "0";
-                        // console.log(el.id);
+                        console.log(el.id);
                     } else {
-                        // do nothing
+                        if (id_input === "edu_detail") {
+                            var value = $("#patient_save select#edu").val();
+                            if ((el.value === null || el.value === '')) {
+                                suc = "0";
+                                console.log(el.id);
+                            }
+                        }
                     }
                 }
             });
 
-    $('textarea').each(
+    $('form#patient_save textarea').each(
             function (i, el) {
 
-                if ((!$("#" + el.id).val() || $("#" + el.id).val() === '')) {
+                if (($("#" + el.id).val() === null || $("#" + el.id).val() === '')) {
                     suc = "0";
                     console.log(el.id + ">>" + $("#" + el.id).val());
 
@@ -499,7 +574,7 @@ function check_submit(check_news) {
                 }
             });
 
-    if (suc === "0" || check_news === false) {
+    if (suc === "0") {
         return false;
     } else {
         return true;
@@ -507,18 +582,7 @@ function check_submit(check_news) {
 
 }
 
-function checkbox_check() {
-    var checked = 1;
-    if (!$('input[type="checkbox"][name="news_email"]').is(":checked") && !$('input[type="checkbox"][name="news_website"]').is(":checked")
-            && !$('input[type="checkbox"][name="news_paper"]').is(":checked") && !$('input[type="checkbox"][name="news_people"]').is(":checked")
-            && !$('input[type="checkbox"][name="news_other"]').is(":checked")) {
-        $("#news_error").html("กรุณาเลือกข้อมูล");
-        return false;
 
-    } else {
-        return true;
-    }
-}
 
 function search_submit() {
 //    $("#search_table").css("display", "none");
@@ -543,11 +607,30 @@ function search_submit() {
 //    $("#search_table").css("display", "block");
 
     $.ajax({
-        url:api_url+"search_person",
-        type:"POST",
-        data:$("#search_form").serialize(),
-        success:function(data){
+        url: api_url + "search_person",
+        type: "POST",
+        data: $("#search_form").serialize(),
+        success: function (data) {
+
+            console.log(data.length);
             console.log(data);
+            var len = data.length;
+            var arr = [];
+//            $('#search_table').DataTable();
+            $("#load").css("display", "block");
+
+            $('#search_table').dataTable().fnClearTable();
+
+            if (!data.result) {
+                $('#search_table').dataTable().fnAddData(data);
+            } else {
+                console.log("not found");
+            }
+
+            setTimeout(function () {
+                $("#load").css("display", "none");
+            }, 300);
+
         }
     });
 
@@ -585,8 +668,8 @@ function save_data() {
             $.confirm({
 
                 title: 'แจ้งเตือน',
-                content: 'กรุณากรอกข้อมูลให้ครบถ้วน !',
-                type: 'red',
+                content: 'เพิ่มข้อมูลสำเร็จ!',
+                type: 'Green',
                 typeAnimated: true,
                 buttons: {
                     ok: {
@@ -596,7 +679,9 @@ function save_data() {
 
                 }
             });
-            console.log(data);
+            $("form#patient_save")[0].reset();
+//            window.location.reload();
+            //console.log(data);
 
         }, error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR + " " + textStatus + " " + errorThrown);
@@ -709,7 +794,7 @@ function edit_person_info(id) {
 
     $("#patient_edit input#rec_day").datepicker("setDate", new Date());
 
-    $("#patient_edit input#birthday").datepicker("setDate", new Date());
+    $("#patient_edit input#birthday_s").datepicker("setDate", new Date());
 
 
 
@@ -772,11 +857,16 @@ function edit_person_info(id) {
                     } else if (idx === "prefix" || idx === "edu" || idx === "status" || idx === "time_sp") {
 
                         $('#' + idx + '_s option[value="' + obj + '"]').attr("selected", true);
+                        if (idx === "edu" && obj === "5") {
+                            $("#edu_ex_s").css("display", "inline");
+                        }
                     } else if (idx === "rec_day" || idx === "birthday") {
                         var date = convert_date_ad(obj);
                         $("#patient_edit input[name=" + idx + "]").val(date);
 
 
+                    } else if (idx === "edu_detail") {
+                        $("#edu_detail_s").val(obj);
                     } else {
                         $("#patient_edit input[name=" + idx + "]").val(obj);
                     }
@@ -910,7 +1000,7 @@ function back_to_edit() {
 }
 
 function more_opt() {
-    
+
     if ($('#more_sec').css('display') == 'none') {
         $("#more_sec").css('display', 'block');
         $("#more_opt").html("ซ่อนตัวเลือกการค้นหา");

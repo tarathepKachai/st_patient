@@ -168,8 +168,8 @@ class Patient extends \Restserver\Libraries\REST_Controller {
                 "<span id='rec_day_" . $r->person_id . "' >" . $rec_day . "</span>",
                 "<span id='name_" . $r->person_id . "' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</span>",
                 "<span id='gender_" . $r->person_id . "' >" . $gender . "</span>",
-                "<span id='rec_day_" . $r->person_id . "' >" . $r->age . "</span>",
-                "<span id='rec_day_" . $r->person_id . "' >" . $exp . "</span>",
+                "<span >" . $r->age . "</span>",
+                "<span  >" . $exp . "</span>",
                 $button
             );
         }
@@ -313,7 +313,7 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         $birthday = $this->convert_date_ad($this->post("birthday"));
 
 
-        $age = $this->cal_age($this->post("birthday"));
+        //$age = $this->cal_age($this->post("birthday"));
 
         $array = array(
             "rec_day" => $rec_day,
@@ -354,8 +354,7 @@ class Patient extends \Restserver\Libraries\REST_Controller {
             "exp_4" => $this->post("exp_4_detail"),
             "time_sp" => $this->post("time_sp"),
             "last_update" => date("Y-m-d H:i:s"),
-            "gender" => $gender,
-            "age" => $age
+            "gender" => $gender
         );
         if ($this->post("form_type") == "insert") {
 
@@ -529,10 +528,52 @@ class Patient extends \Restserver\Libraries\REST_Controller {
             "day1" => $day1,
             "day2" => $day2
         );
-        
-        $result = $this->Patient_model->search_person($array,$option);
 
-        $this->response($result, 200);
+        $result = $this->Patient_model->search_person($array, $option);
+
+
+
+        $data = array();
+
+        if (!isset($result['error'])) {
+            foreach ($result as $r) {
+
+                if ($r->exp == "1") {
+                    $exp = "เคย";
+                } else {
+                    $exp = "ไม่เคย";
+                }
+
+                if ($r->gender == "male") {
+                    $gender = "ชาย";
+                } else {
+                    $gender = "หญิง";
+                }
+
+                $rec_day = $this->convert_date_be($r->rec_day);
+
+                $button = " <button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-success' " .
+                        "onclick='edit_person_info($r->person_id)' >แก้ไข</button>"
+                        . "&nbsp;<button type='button' style='height: 30px;padding: 2px 5px;' class='btn btn-primary' " .
+                        "onclick='manage_sp_act($r->person_id)' >อาการ/โรค</button>";
+                $data[] = array(
+                    "<span id='rec_day_" . $r->person_id . "' >" . $rec_day . "</span>",
+                    "<span id='name_" . $r->person_id . "' >" . $r->prefix . " " . $r->fname . " " . $r->lname . "</span>",
+                    "<span id='gender_" . $r->person_id . "' >" . $gender . "</span>",
+                    "<span >" . $r->age . "</span>",
+                    "<span  >" . $exp . "</span>",
+                    $button
+                );
+            }
+        }else{
+            $data = array(
+              "result" => "ไม่พบข้อมูล"  
+            );
+        }
+
+
+
+        $this->response($data, 200);
     }
 
 }

@@ -34,9 +34,10 @@ class Patient_model extends CI_Model {
     public function get_sp_list() {
 //        $sql = 'SELECT * FROM person_info ps INNER JOIN prefix p on ps.prefix = p.id ';
 //        $query = $this->db->query("person_info");
-        $this->db->select('*');
+        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
         $this->db->from('person_info');
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
+       // $this->db->where("person_id","13");
         $query = $this->db->get();
 
         return $query->result();
@@ -232,7 +233,7 @@ class Patient_model extends CI_Model {
     }
 
     public function search_person($array, $option) {
-
+        $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
         $this->db->from("person_info");
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
 
@@ -257,7 +258,13 @@ class Patient_model extends CI_Model {
                     "age >= " => $array['age1'],
                     "age <= " => $array['age2']
                 );
-                $this->db->where($arr);
+                
+                $age1 = $array['age1']-1;
+                $age2 = $array['age2'];
+                
+                $con = "birthday between date_add( curdate(), interval -$age2 year )
+                       and date_add( curdate(), interval -$age1 year )";
+                $this->db->where($con);
             }
         } else {
             
@@ -265,7 +272,16 @@ class Patient_model extends CI_Model {
 
         $result = $this->db->get();
         $sql = $this->db->last_query();
-        return $result->result();
+        
+        if($result->num_rows()>0){
+            $data = $result->result();
+        }else{
+            $data = array(
+                "error" => "data's not found"
+            );
+        }
+        
+        return $data;
     }
 
 }
