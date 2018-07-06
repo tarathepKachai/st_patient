@@ -329,12 +329,9 @@
                         <!------------------------   FORM SEARCH   ------------------------------------------***************************************-->
                         <form name="search_form" id="search_form" >
                             <label class="label_1">แสดง</label>
-                            <select name="search_option" id="search_option"   >
-
+                            <select name="search_option" id="search_option" >
                                 <option value="1" >--รายชื่อผู้ป่วยจำลอง--</option>
                                 <option value="2" >--ผลประเมิน--</option>
-
-
                             </select>
                             &nbsp; <label class="label_1">เลขที่บัตรประชาชน</label>
                             <input type="text" name="id_search" id="id_search" maxlength="13" class="text_short" style="width: 130px">   

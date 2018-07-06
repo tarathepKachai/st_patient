@@ -37,7 +37,7 @@ class Patient_model extends CI_Model {
         $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
         $this->db->from('person_info');
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
-       // $this->db->where("person_id","13");
+        // $this->db->where("person_id","13");
         $query = $this->db->get();
 
         return $query->result();
@@ -236,6 +236,7 @@ class Patient_model extends CI_Model {
         $this->db->select('*, YEAR(CURRENT_TIMESTAMP) - YEAR(birthday) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(birthday, 5)) as age ');
         $this->db->from("person_info");
         $this->db->join('prefix', 'person_info.prefix = prefix.id');
+        $this->db->join('sp_info', 'person_info.person_id = sp_info.person_id');
 
         if ($array['id_card'] != null && $array['id_card'] != "") {
             $this->db->where("id_card", $array['id_card']);
@@ -258,29 +259,44 @@ class Patient_model extends CI_Model {
                     "age >= " => $array['age1'],
                     "age <= " => $array['age2']
                 );
-                
-                $age1 = $array['age1']-1;
+
+                $age1 = $array['age1'] - 1;
                 $age2 = $array['age2'];
-                
+
                 $con = "birthday between date_add( curdate(), interval -$age2 year )
                        and date_add( curdate(), interval -$age1 year )";
                 $this->db->where($con);
             }
+            if ($array['weight1'] != "" && $array['weight2'] != "" && $array['weight1'] != null && $array['weight2'] != null) {
+                if ($array['weight1'] > $array['weight2']) {
+                    $temp = $array['weight1'];
+                    $array['weight1'] = $array['weight1'];
+                    $array['weight2'] = $temp;
+                }
+                $this->db->where("weight between $array[weight1] and $array[weight2]");
+            }
+
+            if ($array['day1'] != "" && $array['day2'] != "" && $array['day1'] != null && $array['day2'] != null) {
+                $day2 = date('Y-m-d',strtotime($array['day2'] . "+1 days"));
+                $day1 = $array['day1'];
+                $this->db->where(" date between '$day1' and '$day2' ");
+                
+            }
         } else {
             
         }
-
+        $this->db->group_by("id_card");
         $result = $this->db->get();
         $sql = $this->db->last_query();
-        
-        if($result->num_rows()>0){
+
+        if ($result->num_rows() > 0) {
             $data = $result->result();
-        }else{
+        } else {
             $data = array(
                 "error" => "data's not found"
             );
         }
-        
+
         return $data;
     }
 

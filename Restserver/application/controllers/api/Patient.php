@@ -513,7 +513,14 @@ class Patient extends \Restserver\Libraries\REST_Controller {
         $symptom = $this->post("symptom");
         $day1 = $this->post("day1");
         $day2 = $this->post("day2");
-
+        if($day1!=null&&$day1!=""){
+            $day1 = $this->convert_date_ad($day1); 
+        }
+        
+        if($day2!=null&&$day2!=""){
+            $day2 = $this->convert_date_ad($day2);
+        }
+        
         $array = array(
             "id_card" => $id_card,
             "fname" => $fname,

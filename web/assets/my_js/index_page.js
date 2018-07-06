@@ -54,13 +54,9 @@ $(document).ready(function () {
                     extend: 'excelHtml5',
                     title: 'รายงาน ' + today,
                     className: 'copyButton',
-                    messageTop: 'This print was produced using the Print button for DataTables \n test',
                     customize: function (xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
-
                         //$('row c[r^="C"]', sheet).attr('s', '2');
-
-
                     },
                     exportOptions: {
                         modifier: {
@@ -633,8 +629,38 @@ function search_submit() {
 
         }
     });
-
+    
+    
+    
+//    $.ajax({
+//        url: api_url + "search_sp_info",
+//        type: "POST",
+//        data: $("#search_form").serialize(),
+//        success: function (data) {
+//
+//            console.log(data.length);
+//            console.log(data);
+//            var len = data.length;
+//            var arr = [];
+////            $('#search_table').DataTable();
+//            //$("#load").css("display", "block");
+//
+//            $('#search_table2').dataTable().fnClearTable();
+//
+//            if (!data.result) {
+//                $('#search_table2').dataTable().fnAddData(data);
+//            } else {
+//                console.log("not found");
+//            }
+//
+//            setTimeout(function () {
+//                $("#load").css("display", "none");
+//            }, 300);
+//
+//        }
+//    });
 }
+
 function test_t() {
     $.ajax({
         url: client_url + "guzzle",
@@ -990,8 +1016,11 @@ function convert_date_ad(date) {
 function manage_sp_act(id) {
 //    $("#edit_modal").modal("hide");
 //    $("#sp_modal").modal("show");
-
-    window.open(client_url + "sp/get_sp_info/" + id, 'window name', "width=800,height=600,left=100,top=100,resizable=yes,scrollbars=yes");
+var w =screen.availWidth;
+    w = w-100;
+    var h = screen.availHeight;
+    h = h-100;
+    window.open(client_url + "sp/get_sp_info/" + id, 'window name', "width="+w+",height="+h+",left=30,top=30,resizable=yes,scrollbars=yes");
 }
 
 function back_to_edit() {
